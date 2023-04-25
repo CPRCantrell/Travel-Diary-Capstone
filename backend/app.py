@@ -7,6 +7,8 @@ from flask_migrate import Migrate
 from database.models import db
 from database.schemas import ma
 from resources.auth import LoginResource, RegisterResource
+from resources.albums import Albums, IndividualAlbum
+from resources.days import Days, IndividualDay
 from dotenv import load_dotenv
 from os import environ
 
@@ -46,12 +48,12 @@ def create_app():
 
 
 def create_routes():
-    """
-    Creates Flask Restful instance and registers all Resource routes
-    """
     api = Api()
     api.add_resource(RegisterResource, '/api/auth/register')
     api.add_resource(LoginResource, '/api/auth/login')
-    # TODO: Create files for your Resources in resources folder, add them here
+    api.add_resource(Albums, '/api/album')
+    api.add_resource(IndividualAlbum, '/api/album/<int:album_id>')
+    api.add_resource(Days, '/api/day')
+    api.add_resource(IndividualAlbum, '/api/day/<int:day_id>')
 
     return api
