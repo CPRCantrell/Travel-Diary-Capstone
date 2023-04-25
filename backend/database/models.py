@@ -57,6 +57,7 @@ class Photo(db.Model):
     file_location = db.Column(db.Text(), nullable=False)
     caption = db.Column(db.Text())
     day_id = db.Column(db.Integer(), db.ForeignKey('day.id'), nullable=False)
+    private = db.Column(db.Boolean(), nullable=False)
     tags = db.relationship('Tag')
 
 class Tag(db.Model):

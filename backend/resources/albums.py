@@ -18,20 +18,20 @@ class Albums(Resource):
     @jwt_required()
     def get(self):
         user_id = get_jwt_identity()
-        user_albums = Albums.query.filter_by(user_id=user_id)
+        user_albums = Album.query.filter_by(user_id=user_id)
         return albums_schema.dump(user_albums), 200
 
 class IndividualAlbum(Resource):
     @jwt_required()
     def get(self, album_id):
         user_id = get_jwt_identity()
-        album = Albums.query.get((album_id,user_id))
+        album = Album.query.get_or_404(album_id)
         return album_schema.dump(album), 200
 
     @jwt_required()
     def delete(self, album_id):
         user_id = get_jwt_identity()
-        album = Albums.query.get((album_id,user_id))
+        album = Album.query.get_or_404(album_id)
         db.session.delete(album)
         db.session.commit()
         return album_schema.dump(album), 204
@@ -40,7 +40,7 @@ class IndividualAlbum(Resource):
     def patch(self, album_id):
         user_id = get_jwt_identity()
         form_data = request.get_json()
-        album = Albums.query.get((album_id,user_id))
+        album = Album.query.get_or_404(album_id)
         album.private = form_data['private']
         db.session.commit()
         return album_schema.dump(album), 200
@@ -49,7 +49,8 @@ class IndividualAlbum(Resource):
     def put(self, album_id):
         user_id = get_jwt_identity()
         form_data = request.get_json()
-        album = Album.query.get((album_id,user_id))
+        album = Album.query.get_or_404(album_id)
+
 
         album.title = form_data['title']
         album.latitude  = form_data['latitude']
