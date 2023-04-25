@@ -38,6 +38,7 @@ class Album(db.Model):
     day = db.Column(db.Integer(), nullable=False)
     private = db.Column(db.Boolean(), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    days = db.relationship('Day')
 
 class Day(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -47,6 +48,7 @@ class Day(db.Model):
     city = db.Column(db.String(255))
     day_on_trip = db.Column(db.Integer(), nullable=False)
     album_id = db.Column(db.Integer(), db.ForeignKey('album.id'), nullable=False)
+    photos = db.relationship('Photo')
 
 
 class Photo(db.Model):
@@ -55,7 +57,7 @@ class Photo(db.Model):
     file_location = db.Column(db.Text(), nullable=False)
     caption = db.Column(db.Text())
     day_id = db.Column(db.Integer(), db.ForeignKey('day.id'), nullable=False)
-    day = db.relationship('Day')
+    tags = db.relationship('Tag')
 
 class Tag(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
