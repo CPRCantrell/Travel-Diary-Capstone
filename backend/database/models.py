@@ -3,11 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-user_album = db.Table('user_table',
-                      db.column('user_id', db.Integer(), db.ForeignKey('user.id')),
-                      db.column('album_id', db.Integer(), db.ForeignKey('album.id'))
-                      )
-
 class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(255), nullable=False, unique=True)
@@ -16,7 +11,6 @@ class User(db.Model):
     last_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     phone_number = db.Column(db.String(255))
-    albums = db.relationship('Album', secondary=user_album, backref='posts')
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -29,24 +23,29 @@ class User(db.Model):
 
 class Album(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    title = db.Column(db.string(255), nullable=False)
-    latitude = db.Column(db.integer(), nullable=False)
-    longitude = db.Column(db.integer(), nullable=False)
-    continent = db.Column(db.string(255))
-    country = db.Column(db.string(255))
+    title = db.Column(db.String(255), nullable=False)
+    latitude = db.Column(db.Integer(), nullable=False)
+    longitude = db.Column(db.Integer(), nullable=False)
+    continent = db.Column(db.String(255))
+    all_days_in_same_country = db.Column(db.Boolean(), nullable=False)
+    country = db.Column(db.String(255))
+    all_days_in_same_region_or_state = db.Column(db.Boolean(), nullable=False)
     region_or_state = db.Column(db.String(255))
-    city = db.Column(db.string(255))
-    year = db.Column(db.interger(), nullable=False)
-    month = db.Column(db.string(), nullable=False)
-    day = db.column(db.integer(), nullable=False)
+    all_days_in_same_city = db.Column(db.Boolean(), nullable=False)
+    city = db.Column(db.String(255))
+    year = db.Column(db.Integer(), nullable=False)
+    month = db.Column(db.String(255), nullable=False)
+    day = db.Column(db.Integer(), nullable=False)
+    private = db.Column(db.Boolean(), nullable=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
 
 class Day(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     entry = db.Column(db.Text())
-    country = db.Column(db.string(255))
-    state = db.Column(db.string(255))
-    city = db.Column(db.String(255), nullable=False)
-    day_on_trip = db.Column(db.Interger(), nullable=False)
+    country = db.Column(db.String(255))
+    state = db.Column(db.String(255))
+    city = db.Column(db.String(255))
+    day_on_trip = db.Column(db.Integer(), nullable=False)
     album_id = db.Column(db.Integer(), db.ForeignKey('album.id'), nullable=False)
 
 
@@ -56,6 +55,7 @@ class Photo(db.Model):
     file_location = db.Column(db.Text(), nullable=False)
     caption = db.Column(db.Text())
     day_id = db.Column(db.Integer(), db.ForeignKey('day.id'), nullable=False)
+    day = db.relationship('Day')
 
 class Tag(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -74,7 +74,7 @@ class Request(db.Model):
     requester_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
     requester = db.relationship('User')
 
-class friend(db.Model):
+class Friend(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     friend_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     friend = db.relationship('User')
