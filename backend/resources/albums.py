@@ -3,7 +3,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_req
 from flask_restful import Resource
 from database.models import db, Album
 from database.schemas import album_schema, albums_schema
-from sqlalchemy import and_
 
 class Albums(Resource):
     @jwt_required()
