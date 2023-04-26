@@ -1,7 +1,7 @@
 from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, Day
+from database.models import db, Day, Album
 from database.schemas import day_schema, days_schema
 
 class Days(Resource):
@@ -18,8 +18,12 @@ class Days(Resource):
     @jwt_required()
     def get(self):
         user_id = get_jwt_identity()
-        user_days = Day.query.filter_by(user_id=user_id)
-        return days_schema.dump(user_days), 200
+        albums = Album.query.filter_by(user_id=user_id)
+        days = []
+        for album in albums:
+            user_days = Day.query.filter_by(album_id=album.id)
+            days.extend(days_schema.dump(user_days))
+        return days, 200
 
 class IndividualDay(Resource):
     @jwt_required()
@@ -34,7 +38,7 @@ class IndividualDay(Resource):
         day = Day.query.get_or_404(day_id)
         db.session.delete(day)
         db.session.commit()
-        return day_schema.dump(day), 204
+        return "successful", 204
 
     @jwt_required()
     def patch(self, day_id):

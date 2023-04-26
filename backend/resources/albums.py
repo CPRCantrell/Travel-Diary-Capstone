@@ -34,7 +34,7 @@ class IndividualAlbum(Resource):
         album = Album.query.get_or_404(album_id)
         db.session.delete(album)
         db.session.commit()
-        return album_schema.dump(album), 204
+        return "successful", 204
 
     @jwt_required()
     def patch(self, album_id):

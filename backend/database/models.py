@@ -10,7 +10,6 @@ class User(db.Model):
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    phone_number = db.Column(db.String(255))
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -37,7 +36,7 @@ class Album(db.Model):
     month = db.Column(db.String(255), nullable=False)
     day = db.Column(db.Integer(), nullable=False)
     private = db.Column(db.Boolean(), nullable=False)
-    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     days = db.relationship('Day')
 
 class Day(db.Model):
@@ -48,7 +47,7 @@ class Day(db.Model):
     city = db.Column(db.String(255))
     day_on_trip = db.Column(db.Integer(), nullable=False)
     album_id = db.Column(db.Integer(), db.ForeignKey('album.id'), nullable=False)
-    photos = db.relationship('Photos')
+    photos = db.relationship('Photo')
 
 
 class Photo(db.Model):
@@ -75,12 +74,12 @@ class Request(db.Model):
     status = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
     requester_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
-    requester = db.relationship('User')
+    requester = db.relationship('User', foreign_keys=[requester_id])
 
 class Friend(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     friend_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
-    friend = db.relationship('User')
+    friend = db.relationship('User', foreign_keys=[friend_id])
 
     __table_args__ = (
     db.PrimaryKeyConstraint(

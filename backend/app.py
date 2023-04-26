@@ -51,9 +51,9 @@ def create_routes():
     api = Api()
     api.add_resource(RegisterResource, '/api/auth/register')
     api.add_resource(LoginResource, '/api/auth/login')
-    api.add_resource(Albums, '/api/album')
+    api.add_resource(Albums, '/api/albums')
     api.add_resource(IndividualAlbum, '/api/album/<int:album_id>')
-    api.add_resource(Days, '/api/day')
-    api.add_resource(IndividualAlbum, '/api/day/<int:day_id>')
+    api.add_resource(Days, '/api/days')
+    api.add_resource(IndividualDay, '/api/day/<int:day_id>')
 
     return api

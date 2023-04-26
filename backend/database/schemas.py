@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User
+from database.models import User, Album, Day, Photo, Tag, Request, Friend
 
 ma = Marshmallow()
 
@@ -25,9 +25,8 @@ class UserSchema(ma.Schema):
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
     email = fields.String(required=True)
-    phone_number = fields.String()
     class Meta:
-        fields = ("id", "username", "first_name", "last_name", "email", "phone_number")
+        fields = ("id", "username", "first_name", "last_name", "email")
 
 register_schema = RegisterSchema()
 user_schema = UserSchema()
@@ -53,7 +52,11 @@ class TagSchema(ma.Schema):
     tagged_user = ma.Nested(UserFriendSchema, many=False)
 
     class Meta:
-        fields = ('id', 'photo_id', 'user_id', 'friend_first_name', 'friend_last_name')
+        fields = ('id', 'photo_id', 'user_id', 'friend_first_name', 'friend_last_name', 'tagged_user')
+
+    @post_load
+    def create_tag(self, data, **kwargs):
+        return Tag(**data)
 
 tag_schema = TagSchema()
 tags_schema = TagSchema(many=True)
@@ -69,7 +72,7 @@ class PhotoSchema(ma.Schema):
 
 
     class Meta:
-        fields = ('id', 'filename', 'file_location', 'caption', 'day_id')
+        fields = ('id', 'filename', 'file_location', 'caption', 'day_id', 'tags')
 
 photo_schema = PhotoSchema()
 photos_schema = PhotoSchema(many=True)
@@ -85,7 +88,11 @@ class DaySchema(ma.Schema):
     photos = ma.Nested(PhotoSchema, many=True)
 
     class Meta:
-        fields = ('id', 'entry', 'country', 'state', 'city', 'day_on_trip', 'album_id')
+        fields = ('id', 'entry', 'country', 'state', 'city', 'day_on_trip', 'album_id', 'photos')
+
+    @post_load
+    def create_day(self, data, **kwargs):
+        return Day(**data)
 
 day_schema = DaySchema()
 days_schema = DaySchema(many=True)
@@ -106,11 +113,15 @@ class AlbumSchema(ma.Schema):
     month = fields.String(required=True)
     day = fields.Integer(required=True)
     private = fields.Boolean(required=True)
-    user_id = fields.Integer(required=True)
+    user_id = fields.Integer()
     days = ma.Nested(DaySchema, many=True)
 
     class Meta:
-        fields = ('id', 'title', 'latitude', 'longitude', 'continent', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'year', 'month', 'day', 'private', 'user_id')
+        fields = ('id', 'title', 'latitude', 'longitude', 'continent', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'year', 'month', 'day', 'private', 'user_id', 'days')
+
+    @post_load
+    def create_album(self, data, **kwargs):
+        return Album(**data)
 
 album_schema = AlbumSchema()
 albums_schema = AlbumSchema(many=True)
@@ -124,7 +135,11 @@ class RequestSchema(ma.Schema):
     requester = ma.Nested(UserFriendSchema, many=False)
 
     class Meta:
-        fields = ('id', 'request', 'status', 'user_id', 'requester_id')
+        fields = ('id', 'request', 'status', 'user_id', 'requester_id', 'requester')
+
+    @post_load
+    def create_request(self, data, **kwargs):
+        return Request(**data)
 
 request_schema = RequestSchema()
 requests_schema = RequestSchema(many=True)
@@ -134,7 +149,11 @@ class FriendSchema(ma.Schema):
     friend = ma.Nested(UserFriendSchema, many=False)
 
     class Meta:
-        fields = ('user_id', 'friend_id')
+        fields = ('user_id', 'friend_id', 'friend')
+
+    @post_load
+    def create_friend(self, data, **kwargs):
+        return Friend(**data)
 
 friend_schema = FriendSchema()
 friends_schema = FriendSchema(many=True)
