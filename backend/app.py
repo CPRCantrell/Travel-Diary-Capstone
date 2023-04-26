@@ -9,6 +9,8 @@ from database.schemas import ma
 from resources.auth import LoginResource, RegisterResource
 from resources.albums import Albums, IndividualAlbum
 from resources.days import Days, IndividualDay
+from resources.photos import Photos, IndividualPhoto
+from resources.tag import Tags, IndividualTag
 from dotenv import load_dotenv
 from os import environ
 
@@ -55,5 +57,9 @@ def create_routes():
     api.add_resource(IndividualAlbum, '/api/album/<int:album_id>')
     api.add_resource(Days, '/api/days')
     api.add_resource(IndividualDay, '/api/day/<int:day_id>')
+    api.add_resource(Photos, '/api/photos')
+    api.add_resource(IndividualPhoto, '/api/photo/<int:photo_id>')
+    api.add_resource(Tags, '/api/tags')
+    api.add_resource(IndividualTag, '/api/tag/<int:tag_id>')
 
     return api

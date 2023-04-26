@@ -10,7 +10,6 @@ class Days(Resource):
         user_id = get_jwt_identity()
         form_data = request.get_json()
         new_day = day_schema.load(form_data)
-        new_day.user_id = user_id
         db.session.add(new_day)
         db.session.commit()
         return day_schema.dump(new_day), 201

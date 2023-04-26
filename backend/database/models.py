@@ -63,8 +63,7 @@ class Tag(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     photo_id = db.Column(db.Integer(), db.ForeignKey('photo.id'), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
-    friend_first_name = db.Column(db.String(255))
-    friend_last_name = db.Column(db.String(255))
+    friend_without_user_id = db.Column(db.String(255))
     tagged_user = db.relationship('User')
 
 

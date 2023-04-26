@@ -46,13 +46,12 @@ users_friend_schema = UserFriendSchema(many=True)
 class TagSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     photo_id = fields.Integer(required=True)
-    user_id = fields.Integer(required=True)
-    friend_first_name = fields.String()
-    friend_last_name = fields.String()
+    user_id = fields.Integer()
+    friend_without_user_id = fields.String()
     tagged_user = ma.Nested(UserFriendSchema, many=False)
 
     class Meta:
-        fields = ('id', 'photo_id', 'user_id', 'friend_first_name', 'friend_last_name', 'tagged_user')
+        fields = ('id', 'photo_id', 'user_id', 'friend_without_user_id', 'tagged_user')
 
     @post_load
     def create_tag(self, data, **kwargs):
@@ -72,7 +71,11 @@ class PhotoSchema(ma.Schema):
 
 
     class Meta:
-        fields = ('id', 'filename', 'file_location', 'caption', 'day_id', 'tags')
+        fields = ('id', 'filename', 'file_location', 'caption', 'day_id', 'private','tags')
+
+    @post_load
+    def create_photo(self, data, **kwargs):
+        return Photo(**data)
 
 photo_schema = PhotoSchema()
 photos_schema = PhotoSchema(many=True)
