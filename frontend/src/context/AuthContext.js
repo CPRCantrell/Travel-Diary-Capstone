@@ -39,8 +39,7 @@ export const AuthProvider = ({ children }) => {
       let response = await axios.post(`${BASE_URL}/register`, finalData);
       if (response.status === 201) {
         console.log("Successful registration! Log in to access token");
-        setIsServerError(false);
-        navigate("/login");
+        loginUser({username: registerData.username, password: registerData.password})
       } else {
         navigate("/register");
       }
@@ -59,13 +58,10 @@ export const AuthProvider = ({ children }) => {
         setUser(setUserObject(loggedInUser));
         setIsServerError(false);
         navigate("/");
-      } else {
-        navigate("/register");
       }
     } catch (error) {
       console.log(error.response.data);
       setIsServerError(true);
-      navigate("/register");
     }
   };
 

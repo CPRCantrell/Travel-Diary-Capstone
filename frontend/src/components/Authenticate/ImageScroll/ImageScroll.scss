@@ -1,0 +1,29 @@
+.image-scroll{
+    position: relative;
+    overflow: hidden;
+
+    img{
+        width: 25vw;
+        display: block;
+    }
+}
+
+.animate{
+    position: absolute;
+    --max-height: calc(25vw * 12);
+    --timing: 480s;
+    height: var(--max-height);
+}
+
+.down{
+    animation: down-up var(--timing) linear infinite alternate;
+}
+
+.up{
+    animation: down-up var(--timing) linear infinite alternate-reverse;
+}
+
+@keyframes down-up {
+    0%{top:0}
+    100%{top: calc(-1 * var(--max-height))}
+}
