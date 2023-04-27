@@ -9,9 +9,7 @@ const HomePage = () => {
   const [user, token] = useAuth();
   return (
     <main className="home-content">
-      <div className="container">
-        <Map />
-      </div>
+      <Map />
     </main>
   );
 };

@@ -16,6 +16,9 @@ const Navbar = () => {
           <button>Home</button>
         </NavLink>
         <button onClick={logoutUser}>Logout</button>
+        <NavLink activeclassname='active' to="/new" className="link">
+          <button>+ Start Trip</button>
+        </NavLink>
       </div>
     :null}</>
   );

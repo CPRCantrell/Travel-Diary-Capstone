@@ -4,6 +4,7 @@ import "./App.scss";
 
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
+import NewTripPage from "./pages/NewTripPage/NewTripPage";
 import AuthenticationPage from "./pages/AuthenticationPage/AuthenticationPage"
 
 // Component Imports
@@ -15,11 +16,12 @@ import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
   return (
-    <div>
+    <div className="app">
       <Navbar />
       <Routes>
         <Route path="/authentication" element={<AuthenticationPage />} />
         <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+        <Route path="/new" element={<PrivateRoute><NewTripPage /></PrivateRoute>} />
         <Route path="/*" element={<Navigate to="/home" replace={true}/>} />
       </Routes>
     </div>
