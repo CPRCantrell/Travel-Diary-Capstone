@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (loginData) => {
     try {
+      debugger
       let response = await axios.post(`${BASE_URL}/login`, loginData);
       if (response.status === 200) {
         localStorage.setItem("token", JSON.stringify(response.data.access));
@@ -57,7 +58,7 @@ export const AuthProvider = ({ children }) => {
         let loggedInUser = jwtDecode(response.data.access);
         setUser(setUserObject(loggedInUser));
         setIsServerError(false);
-        navigate("/");
+        navigate("/home");
       }
     } catch (error) {
       console.log(error.response.data);
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("token");
       setUser(null);
       setToken(null);
-      navigate("/");
+      navigate("/login");
     }
   };
 

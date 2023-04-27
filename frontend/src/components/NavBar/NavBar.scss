@@ -1,0 +1,11 @@
+.nav-bar{
+  background-color: var(--sub-background);
+  display: flex;
+  align-items: center;
+  padding-inline: 4rem;
+  height: 4.5rem;
+  gap: 2rem;
+  position: fixed;
+  width: 100%;
+  box-shadow: 0px 6px 6px black;
+}

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import AuthContext from "../../../../context/AuthContext";
 import useCustomForm from "../../../../hooks/useCustomForm";
-import { Link } from "react-router-dom";
 import "./Login.scss";
 
 const Login = ({signUp}) => {
@@ -52,7 +51,7 @@ const Login = ({signUp}) => {
           </div>
           <div className="links">
             <a href="#">Fogot Password</a>
-            <button onClick={()=>signUp(false)}>Signup</button>
+            <p onClick={()=>signUp(false)}>Signup</p>
           </div>
           <input type="submit" value='Login'/>
         </form>

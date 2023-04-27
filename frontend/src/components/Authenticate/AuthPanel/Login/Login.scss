@@ -12,10 +12,19 @@
     overflow: hidden;
 }
 
+.alert{
+    position: absolute;
+    font-size: var(--xsm-text);
+    top: 3rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
 .login-form{
     background-color: var(--sub-background);
     border-radius: 8px;
-    width: 20vw;
+    width: 500px;
     padding: 4rem 5rem;
     display: flex;
     flex-direction: column;
@@ -87,13 +96,13 @@
         justify-content: space-between;
         font-size: var(--xsm-text);
 
-        button{
+        p{
             background-color: transparent;
             color: var(--highlight);
             border: none;
             &:hover{
                 text-decoration: underline;
-                cursor: pointer;
+                cursor:pointer;
             }
         }
 
