@@ -29,3 +29,12 @@
 .app{
   background-image: linear-gradient(to bottom, #0066FF 0%, #00FF85 100%);
 }
+
+.content{
+  background-color: var(--main-background);
+  padding-top: 4.5rem;
+  width: 80%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: auto;
+}

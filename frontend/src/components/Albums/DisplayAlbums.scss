@@ -1,0 +1,13 @@
+.display-albums{
+    display: flex;
+    justify-content: center;
+
+    table{
+        color: white;
+
+        th,
+        td{
+            padding-inline: 1rem;
+        }
+    }
+}

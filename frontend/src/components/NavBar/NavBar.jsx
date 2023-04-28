@@ -15,6 +15,9 @@ const Navbar = () => {
         <NavLink activeclassname='active' to="/home" className="link">
           <button>Home</button>
         </NavLink>
+        <NavLink activeclassname='active' to="/albums" className="link">
+          <button>Albums</button>
+        </NavLink>
         <button onClick={logoutUser}>Logout</button>
         <NavLink activeclassname='active' to="/new" className="link">
           <button>+ Start Trip</button>

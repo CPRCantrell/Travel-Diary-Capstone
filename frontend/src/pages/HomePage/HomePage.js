@@ -8,7 +8,7 @@ import Map from "../../components/Home/Map/Map";
 const HomePage = () => {
   const [user, token] = useAuth();
   return (
-    <main className="home-content">
+    <main className="home content">
       <Map />
     </main>
   );

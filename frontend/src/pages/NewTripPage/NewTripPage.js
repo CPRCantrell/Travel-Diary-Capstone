@@ -5,7 +5,7 @@ import './NewTripPage.scss'
 
 const NewTripPage = () => {
     return (
-        <main className='trip-content'>
+        <main className='trip content'>
             <RequiredAlbumInfo />
         </main>
     );
