@@ -1,0 +1,5 @@
+.collaps-control{
+    transition: max-height ease 250ms;
+    overflow:hidden;
+    max-height: 0;
+}
