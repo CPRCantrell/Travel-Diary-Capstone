@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import useAuth from '../../hooks/useAuth';
+import DisplayAlbum from '../../components/AlbumDetails/DisplayAlbum/DisplayAlbum';
+import DisplayDays from '../../components/AlbumDetails/DisplayDays/DisplayDays';
 
 import './AlbumDetailPage.scss'
 
@@ -30,8 +32,8 @@ const AlbumDetailPage = () => {
             })
             album.current = response.data
             days.current = response.data.days
-            days.current.map((day) =>day.photos).forEach((dayPhotos) => photos.current = [...photos.current, ...dayPhotos])
-            photos.current.map((photo) =>photo.tags).forEach((phototags => tags.current = [...tags.current, ...phototags]))
+            days.current.map(day => day.photos).forEach(dayPhotos => photos.current = [...photos.current, ...dayPhotos])
+            photos.current.map(photo => photo.tags).forEach(phototags => tags.current = [...tags.current, ...phototags])
             setLoading(false)
         }
         catch{
@@ -42,7 +44,8 @@ const AlbumDetailPage = () => {
     return (
         <main className='album-details content'>
             {!loading?<>
-                <h1 style={{fontSize: '5rem'}}>{album.current.title}</h1>
+                <DisplayAlbum album={album.current} />
+                <DisplayDays days={days.current} />
             </>:null}
         </main>
     );
