@@ -114,8 +114,11 @@ class AlbumSchema(ma.Schema):
     month = fields.String(required=True)
     day = fields.Integer(required=True)
     private = fields.Boolean(required=True)
+    corrent_trip = fields.Boolean()
+    cover_image = fields.Integer()
     user_id = fields.Integer()
     days = ma.Nested(DaySchema, many=True)
+    cover = ma.Nested(PhotoSchema)
 
     class Meta:
         fields = ('id', 'title', 'latitude', 'longitude', 'continent', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'year', 'month', 'day', 'private', 'user_id', 'days')

@@ -1,8 +1,15 @@
+import React, { useState } from 'react';
+
 import DisplayPhotos from './DisplayPhotos/DisplayPhotos';
+import Collapsible from '../../elements/Collapsible/Collapsible'
+import DayForm from './DayForm/DayForm';
 
 import './DisplayDays.scss'
 
-const DisplayDays = ({ days }) => {
+const DisplayDays = ({ days, setLoading, auth }) => {
+
+    const [addDay, setAddDay] = useState(false);
+
     return (
         <div className='days'>
             {days.map((day, index) => {

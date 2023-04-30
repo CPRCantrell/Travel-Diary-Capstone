@@ -34,8 +34,11 @@ class Album(db.Model):
     month = db.Column(db.String(255), nullable=False)
     day = db.Column(db.Integer(), nullable=False)
     private = db.Column(db.Boolean(), nullable=False)
+    current_trip = db.Column(db.Boolean(), default=True)
+    cover_image = db.Column(db.Integer(), db.ForeignKey('photo.id'))
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     days = db.relationship('Day')
+    cover = db.relationship('Photo')
 
 class Day(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

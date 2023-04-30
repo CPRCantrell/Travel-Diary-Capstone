@@ -5,6 +5,7 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import DisplayAlbum from '../../components/AlbumDetails/DisplayAlbum/DisplayAlbum';
 import DisplayDays from '../../components/AlbumDetails/DisplayDays/DisplayDays';
+import DayForm from '../../components/AlbumDetails/DisplayDays/DayForm/DayForm';
 
 import './AlbumDetailPage.scss'
 
@@ -12,8 +13,10 @@ const AlbumDetailPage = () => {
 
     const { albumId } = useParams()
     const [user, token] = useAuth()
+    const auth = {headers:{Authorization: 'Bearer ' + token}}
 
     const [loading, setLoading] = useState(true);
+    const [currentTrip, setcurrentTrip] = useState(false);
     const album = useRef([]);
     const days = useRef([]);
     const photos = useRef([]);
@@ -22,6 +25,10 @@ const AlbumDetailPage = () => {
     useEffect(() => {
         getAlbumInfo()
     }, []);
+
+    useEffect(() => {
+        if(loading){getAlbumInfo()}
+    }, [loading]);
 
     async function getAlbumInfo(){
         try{
@@ -45,7 +52,8 @@ const AlbumDetailPage = () => {
         <main className='album-details content'>
             {!loading?<>
                 <DisplayAlbum album={album.current} />
-                <DisplayDays days={days.current} />
+                {currentTrip? <DayForm album={album} auth={auth} /> : null}
+                <DisplayDays days={days.current} setLoading={setLoading} auth={auth} />
             </>:null}
         </main>
     );

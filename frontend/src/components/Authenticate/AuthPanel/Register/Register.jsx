@@ -23,7 +23,7 @@ const Register = ({signIn}) => {
         <form className="register-form" onSubmit={handleSubmit}>
           <div className="register-title">
             <h1>Register</h1>
-            <button className="links" onClick={()=>signIn(true)}>Sign in</button>
+            <p className="links" onClick={()=>signIn(true)}>Sign in</p>
           </div>
           <div className="input-box">
             <input
