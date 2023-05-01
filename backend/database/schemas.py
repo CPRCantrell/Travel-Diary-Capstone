@@ -87,11 +87,12 @@ class DaySchema(ma.Schema):
     state = fields.String()
     city = fields.String()
     day_on_trip = fields.Integer(required=True)
+    day_complete = fields.Boolean()
     album_id = fields.Integer(required=True)
     photos = ma.Nested(PhotoSchema, many=True)
 
     class Meta:
-        fields = ('id', 'entry', 'country', 'state', 'city', 'day_on_trip', 'album_id', 'photos')
+        fields = ('id', 'entry', 'country', 'state', 'city', 'day_on_trip', 'day_complete', 'album_id', 'photos')
 
     @post_load
     def create_day(self, data, **kwargs):

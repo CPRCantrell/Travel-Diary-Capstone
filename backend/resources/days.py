@@ -58,7 +58,6 @@ class IndividualDay(Resource):
         day.country  = form_data['country']
         day.state = form_data['state']
         day.city = form_data['city']
-        day.day_on_trip = form_data['day_on_trip']
 
         db.session.commit()
         return day_schema.dump(day), 200

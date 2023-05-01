@@ -4,7 +4,7 @@ import uploadIcon from '../../../assests/icons/upload.svg'
 
 import './DragDropInput.scss'
 
-const DragDropInput = (props) => {
+const DragDropInput = ({selectedFile, setSelectedFile }) => {
 
     const wrapperRef = useRef(null);
 
@@ -17,20 +17,20 @@ const DragDropInput = (props) => {
         if(file.type.slice(0,6) !== 'image/')
             alert('not an acceptable file')
         else
-            props.setSelectedFile(file)
+            setSelectedFile(file)
     }
 
     return (
-        <div className={'drop-area'+ (props.selectedFile ? ' no-background':'')} ref={wrapperRef}
+        <div className={'drop-area'+ (selectedFile ? ' no-background':'')} ref={wrapperRef}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
         onChange={(e)=>handleChange(e)}
         >
-        {props.selectedFile ?
+        {selectedFile ?
         (
             <div className='img-preview'>
-                <img src={URL.createObjectURL(props.selectedFile)} alt='preview of file'/>
+                <img src={URL.createObjectURL(selectedFile)} alt='preview of file'/>
             </div>
         ):(
             <div className='drop-label'>

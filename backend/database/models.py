@@ -48,6 +48,7 @@ class Day(db.Model):
     state = db.Column(db.String(255))
     city = db.Column(db.String(255))
     day_on_trip = db.Column(db.Integer(), nullable=False)
+    day_complete = db.Column(db.Boolean(), default=False)
     album_id = db.Column(db.Integer(), db.ForeignKey('album.id'), nullable=False)
     photos = db.relationship('Photo')
 
