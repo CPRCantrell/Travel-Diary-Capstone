@@ -105,11 +105,12 @@ class AlbumSchema(ma.Schema):
     title = fields.String(required=True)
     latitude = fields.Float(required=True)
     longitude = fields.Float(required=True)
-    continent = fields.String()
+    region = fields.String()
     all_days_in_same_country = fields.Boolean(required=True)
     country = fields.String()
     all_days_in_same_city = fields.Boolean(required=True)
     city = fields.String()
+    state = fields.String()
     year = fields.Integer(required=True)
     month = fields.String(required=True)
     day = fields.Integer(required=True)
@@ -121,7 +122,7 @@ class AlbumSchema(ma.Schema):
     cover = ma.Nested(PhotoSchema)
 
     class Meta:
-        fields = ('id', 'title', 'latitude', 'longitude', 'continent', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'year', 'month', 'day', 'private', 'user_id', 'days')
+        fields = ('id', 'title', 'latitude', 'longitude', 'region', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'state', 'year', 'month', 'day', 'private', 'user_id', 'days','cover_image', 'cover', 'current_trip')
 
     @post_load
     def create_album(self, data, **kwargs):

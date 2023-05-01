@@ -1,0 +1,66 @@
+.trip-info{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    column-gap: 1rem;
+    padding: 2rem 4rem;
+    background-color: var(--sub-background);
+    color: var(--off-white);
+
+    .info-group{
+        align-items: center;
+    }
+
+    .date{
+        width: 12rem;
+    }
+
+    .location,
+    input[type='submit']{
+        margin-top: 2rem;
+    }
+
+    .location{
+        height: 6rem;
+
+        label span{
+            text-decoration: underline;
+        }
+    }
+
+    .private{
+        font-size: var(--xsm-text);
+        justify-self: flex-end;
+    }
+
+    .mapbox-search{
+        margin-top: 1.5rem;
+
+        &:hover{
+            cursor: text;
+        }
+
+        span{
+            color: var(--highlight);
+            transform: translateY(calc(-1 * (var(--sm-text) + (var(--xsm-padding)*2))));
+            font-size: var(--xsm-text);
+        }
+
+        i{
+            height: calc(var(--sm-text) + (var(--xsm-padding)*3));
+        }
+    }
+}
+
+
+.d-grid{
+    display: grid;
+}
+
+.d-flex{
+    display: flex;
+    gap: 1rem;
+}
+
+.span-across{
+    grid-column: 1 / span 2;
+}
