@@ -38,7 +38,7 @@ const DayForm = ({ album, auth }) => {
     }
 
     return (
-        <div>
+        <div className='day-form'>
             {!addDay? <button onClick={()=>createDay()}>+ Day</button>:
                 <div>
                     {day.id?

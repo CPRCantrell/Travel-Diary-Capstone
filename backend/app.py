@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
@@ -22,7 +23,6 @@ bcrypt = Bcrypt()
 jwt= JWTManager()
 cors = CORS()
 migrate = Migrate()
-UPLOAD_FOLDER = "C:/Users/Chris/Desktop/DevCodeCamp/Projects/CapStone -Travel Diary/Travel Diary/frontend/src/assests/uploads"
 
 def create_app():
     """
@@ -34,7 +34,7 @@ def create_app():
     # Loads config properties from .env file
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET_KEY')
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    app.config['UPLOAD_FOLDER'] = '/Users/Chris/Desktop/DevCodeCamp/Projects/CapStone -Travel Diary/Travel Diary/backend/static/uploads'
 
     # Registers all routes with API
     api = create_routes()

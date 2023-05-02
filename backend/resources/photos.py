@@ -1,5 +1,5 @@
 import os
-from flask import request, redirect
+from flask import request, send_from_directory, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
 from database.models import db, Photo, Album
@@ -12,11 +12,10 @@ class Photos(Resource):
     def post(self):
         user_id = get_jwt_identity()
         file = request.files.get('photo')
-        filename = str(uuid.uuid4()) +'.'+ file.filename.split('.')[-1]
-        target = os.path.join('C:/Users/Chris/Desktop/DevCodeCamp/Projects/CapStone -Travel Diary/Travel Diary/frontend/src/assests/uploads/', filename)
-        file.save(target)
+        file.filename = str(uuid.uuid4()) +'.'+ file.filename.split('.')[-1]
+        file.save(current_app.config['UPLOAD_FOLDER'])
         new_photo = photo_schema.load(request.form)
-        new_photo.file_location = target
+        new_photo.filename = file.filename
         db.session.add(new_photo)
         db.session.commit()
         return photo_schema.dump(new_photo), 201
@@ -33,11 +32,9 @@ class Photos(Resource):
         return photos, 200
 
 class IndividualPhoto(Resource):
-    @jwt_required()
     def get(self, photo_id):
-        user_id = get_jwt_identity()
         photo = Photo.query.get_or_404(photo_id)
-        return photo.file_location, 200
+        return send_from_directory(current_app.config['UPLOAD_FOLDER'],photo.filename, as_attachment=False)
 
     @jwt_required()
     def delete(self, photo_id):

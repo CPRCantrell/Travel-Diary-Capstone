@@ -62,7 +62,7 @@ tags_schema = TagSchema(many=True)
 
 class PhotoSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
-    file_location = fields.String()
+    filename = fields.String()
     caption = fields.String()
     day_id = fields.Integer(required=True)
     private = fields.Boolean(required=True)
