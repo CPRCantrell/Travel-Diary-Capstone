@@ -12,6 +12,7 @@ const DayForm = ({ album, auth }) => {
 
     const [baseUrl] = useGlobalVariables()
     const [addDay, setAddDay] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [day, setDay] = useState();
 
     useEffect(() => {
@@ -22,6 +23,7 @@ const DayForm = ({ album, auth }) => {
                 setAddDay(true)
             }
         }
+        setLoading(false)
     },[]);
 
     async function createDay(){
@@ -41,8 +43,8 @@ const DayForm = ({ album, auth }) => {
                 <div>
                     {day.id?
                         <>
-                            <AddPhoto auth={auth}/>
-                            <DisplayPhotos photos={day.photos}/>
+                            <AddPhoto auth={auth} day={day} reload={setLoading}/>
+                            <DisplayPhotos photos={day.photos} auth={auth}/>
                         </>
                     :null}
                 </div>

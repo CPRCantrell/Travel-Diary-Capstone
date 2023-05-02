@@ -22,6 +22,7 @@ bcrypt = Bcrypt()
 jwt= JWTManager()
 cors = CORS()
 migrate = Migrate()
+UPLOAD_FOLDER = "C:/Users/Chris/Desktop/DevCodeCamp/Projects/CapStone -Travel Diary/Travel Diary/frontend/src/assests/uploads"
 
 def create_app():
     """
@@ -33,6 +34,7 @@ def create_app():
     # Loads config properties from .env file
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET_KEY')
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
     # Registers all routes with API
     api = create_routes()
@@ -61,5 +63,4 @@ def create_routes():
     api.add_resource(IndividualPhoto, '/api/photo/<int:photo_id>')
     api.add_resource(Tags, '/api/tags')
     api.add_resource(IndividualTag, '/api/tag/<int:tag_id>')
-
     return api

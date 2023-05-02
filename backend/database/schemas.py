@@ -62,8 +62,7 @@ tags_schema = TagSchema(many=True)
 
 class PhotoSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
-    filename = fields.String(required=True)
-    file_location = fields.String(required=True)
+    file_location = fields.String()
     caption = fields.String()
     day_id = fields.Integer(required=True)
     private = fields.Boolean(required=True)
@@ -71,7 +70,7 @@ class PhotoSchema(ma.Schema):
 
 
     class Meta:
-        fields = ('id', 'filename', 'file_location', 'caption', 'day_id', 'private','tags')
+        fields = ('id', 'file_location', 'caption', 'day_id', 'private','tags')
 
     @post_load
     def create_photo(self, data, **kwargs):

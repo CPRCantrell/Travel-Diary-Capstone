@@ -55,7 +55,6 @@ class Day(db.Model):
 
 class Photo(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    filename = db.Column(db.String(255), nullable=False)
     file_location = db.Column(db.Text(), nullable=False)
     caption = db.Column(db.Text())
     day_id = db.Column(db.Integer(), db.ForeignKey('day.id'), nullable=False)

@@ -1,9 +1,9 @@
 import './SwitchInput.scss'
 
-const SwitchInput = ({ checked, onChange }) => {
+const SwitchInput = ({ checked, onChange, name = 'switch'}) => {
     return (
         <div className='switch'>
-            <input type='checkbox' checked={checked} onChange={onChange}/>
+            <input name={name} type='checkbox' checked={checked} onChange={onChange}/>
             <span className='slider round' />
         </div>
     );

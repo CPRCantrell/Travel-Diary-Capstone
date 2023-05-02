@@ -8,7 +8,7 @@ import SwitchInput from '../../elements/SwitchInput/SwitchInput'
 
 import './AddPhoto.scss'
 
-const AddPhoto = ({auth, day}) => {
+const AddPhoto = ({auth, day, reload}) => {
 
     const [base_url] = useGlobalVariables()
     const [selectedPhoto, setSelectedPhoto] = useState();
@@ -27,11 +27,11 @@ const AddPhoto = ({auth, day}) => {
 
     function handleSubmit(event){
         event.preventDefault()
-
-        const data = new FormData()
-        data.append('file', selectedPhoto);
-        data.append('caption', photoCaption);
+        const data = new FormData(event.target)
+        data.append('day_id', day.id)
         submitData(data)
+        setPhotoModal(false)
+        reload(true)
     }
 
     async function submitData(data){
@@ -47,14 +47,15 @@ const AddPhoto = ({auth, day}) => {
         <div>
             <DragDropInput selectedFile={selectedPhoto} setSelectedFile={setSelectedPhoto} />
             <Modal show={photoModal} setShow={setPhotoModal}>
-                <form className='photo-info' onSubmit={(e)=>handleSubmit(e)}>
+                <form encType='multipart/form-data' className='photo-info' onSubmit={(e)=>handleSubmit(e)}>
+                    <DragDropInput selectedFile={selectedPhoto} setSelectedFile={setSelectedPhoto} />
                     <div>
                         <label>Photo Caption</label>
-                        <textarea value={photoCaption} onInput={(e)=>setPhotoCaption(e.target.value)}/>
+                        <textarea name='caption' value={photoCaption} onInput={(e)=>setPhotoCaption(e.target.value)}/>
                     </div>
                     <div>
                         <label>Set Private</label>
-                        <SwitchInput checked={photoPrivacy} onChange={()=>setPhotoPrivacy(!photoPrivacy)} />
+                        <SwitchInput checked={photoPrivacy} onChange={()=>setPhotoPrivacy(!photoPrivacy)} name='private' />
                     </div>
                     <input type='submit' value='Submit' />
                 </form>
