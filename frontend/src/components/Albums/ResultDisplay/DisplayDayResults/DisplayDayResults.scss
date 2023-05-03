@@ -1,0 +1,14 @@
+.day-results{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--off-white);
+
+    table{
+
+        th,
+        td{
+            padding-inline: 1rem;
+        }
+    }
+}

@@ -1,9 +1,10 @@
-.display-albums{
+.album-results{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    color: var(--off-white);
 
     table{
-        color: white;
 
         th,
         td{

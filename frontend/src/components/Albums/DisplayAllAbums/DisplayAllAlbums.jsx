@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 
-import './DisplayAlbums.scss'
+import './DisplayAllAlbums.scss'
 
-const DisplayAlbums = () => {
+const DisplayAllAlbums = () => {
 
     const [user, token] = useAuth()
     const navigation = useNavigate()
@@ -38,12 +38,9 @@ const DisplayAlbums = () => {
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
-                            <th>Continent</th>
-                            <th>All Days In Country</th>
+                            <th>Region</th>
                             <th>Country</th>
-                            <th>All Days In City</th>
+                            <th>State</th>
                             <th>City</th>
                             <th>Month</th>
                             <th>Day</th>
@@ -56,12 +53,9 @@ const DisplayAlbums = () => {
                             return(
                                 <tr key={index} onClick={()=>navigation(`/album-detail/${album.id}`)}>
                                     <td>{album.title}</td>
-                                    <td>{album.latitude}</td>
-                                    <td>{album.longitude}</td>
-                                    <td>{album.continent}</td>
-                                    <td>{`${album.all_days_in_same_country}`}</td>
+                                    <td>{album.region}</td>
                                     <td>{album.country}</td>
-                                    <td>{`${album.all_days_in_same_city}`}</td>
+                                    <td>{album.state}</td>
                                     <td>{album.city}</td>
                                     <td>{album.month}</td>
                                     <td>{album.day}</td>
@@ -77,4 +71,4 @@ const DisplayAlbums = () => {
     );
 }
 
-export default DisplayAlbums;
+export default DisplayAllAlbums;

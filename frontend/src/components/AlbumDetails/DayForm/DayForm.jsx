@@ -94,11 +94,11 @@ const DayForm = ({ album, auth, setReload }) => {
     }
 
     function deteterminLocationDisplay(){
+        if(!album.all_days_in_same_city){
+            return <h3>{day.state === null ? day.city: `${day.city}, ${day.state}`}</h3>
+        }
         if(!album.all_days_in_same_country){
             return <h3>{`${day.state === null ? day.city: `${day.city}, ${day.state}`}, ${day.country}`}</h3>
-        }
-        else if(!album.all_days_in_same_city){
-            return <h3>{day.state === null ? day.city: `${day.city}, ${day.state}`}</h3>
         }
         return null
     }

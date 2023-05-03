@@ -27,7 +27,11 @@ const AlbumDetailPage = () => {
     }, []);
 
     useEffect(() => {
-        if(loading){getAlbumInfo()}
+        if(loading){
+            photos.current = []
+            tags.current = []
+            getAlbumInfo()
+        }
     }, [loading]);
 
     async function getAlbumInfo(){
@@ -39,8 +43,8 @@ const AlbumDetailPage = () => {
             })
             album.current = response.data
             days.current = response.data.days
-            days.current.map(day => day.photos).forEach(dayPhotos => photos.current = [...photos.current, ...dayPhotos])
-            photos.current.map(photo => photo.tags).forEach(phototags => tags.current = [...tags.current, ...phototags])
+            if(photos.current.length === 0){days.current.forEach(day => photos.current = photos.current.concat(day.photos))}
+            if(tags.current.length === 0){photos.current.forEach(photoTags => tags.current = tags.current.concat(photoTags.tags))}
             setcurrentTrip(response.data.current_trip)
             setLoading(false)
         }
@@ -54,7 +58,7 @@ const AlbumDetailPage = () => {
             {!loading?<>
                 <DisplayAlbum album={album.current} />
                 {currentTrip? <DayForm album={album.current} auth={auth} setReload={setLoading}/> : null}
-                <DisplayDays days={days.current} setLoading={setLoading} auth={auth} />
+                <DisplayDays days={days.current} album={album}/>
             </>:null}
         </main>
     );
