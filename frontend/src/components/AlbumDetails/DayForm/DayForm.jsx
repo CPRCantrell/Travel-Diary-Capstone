@@ -8,11 +8,10 @@ import AddPhoto from '../AddPhoto/AddPhoto';
 
 import './DayForm.scss'
 
-const DayForm = ({ album, auth }) => {
+const DayForm = ({ album, auth, setReload }) => {
 
     const [baseUrl] = useGlobalVariables()
     const [addDay, setAddDay] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [day, setDay] = useState();
 
     useEffect(() => {
@@ -23,7 +22,6 @@ const DayForm = ({ album, auth }) => {
                 setAddDay(true)
             }
         }
-        setLoading(false)
     },[]);
 
     async function createDay(){
@@ -41,12 +39,12 @@ const DayForm = ({ album, auth }) => {
         <div className='day-form'>
             {!addDay? <button onClick={()=>createDay()}>+ Day</button>:
                 <div>
-                    {day.id?
-                        <>
-                            <AddPhoto auth={auth} day={day} reload={setLoading}/>
-                            <DisplayPhotos photos={day.photos} auth={auth}/>
-                        </>
-                    :null}
+                    {day.id?<>
+                            <div className='photo-area'>
+                                <AddPhoto auth={auth} day={day} setReload={setReload}/>
+                                <DisplayPhotos photos={day.photos} auth={auth}/>
+                            </div>
+                        </>:null}
                 </div>
             }
         </div>

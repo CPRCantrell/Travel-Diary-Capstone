@@ -4,7 +4,7 @@ import uploadIcon from '../../../assests/icons/upload.svg'
 
 import './DragDropInput.scss'
 
-const DragDropInput = ({selectedFile, setSelectedFile }) => {
+const DragDropInput = React.forwardRef(({selectedFile, setSelectedFile }, ref) => {
 
     const wrapperRef = useRef(null);
 
@@ -39,9 +39,9 @@ const DragDropInput = ({selectedFile, setSelectedFile }) => {
             </div>
         )
         }
-            <input formEncType='multioart/form-data' type='file' name='photo' accept='image/*' required/>
+            <input ref={ref} formEncType='multioart/form-data' type='file' name='photo' accept='image/*' required/>
         </div>
     );
-}
+})
 
 export default DragDropInput

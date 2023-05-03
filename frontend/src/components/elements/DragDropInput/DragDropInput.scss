@@ -1,9 +1,10 @@
 .drop-area{
+    display: block;
     position: relative;
     width: 200px;
-    height: 200px;
-    border:  2px dashed black;
-    border-radius: 10px;
+    height: 18rem;
+    border:  1px dashed black;
+    border-radius: 3px;
 
     display: flex;
     align-items: center;
@@ -48,7 +49,7 @@
 }
 
 .img-preview img{
-    width: 200px;
-    height: 200px;
+
+    height: 18rem;
     border-radius: 5px;
 }

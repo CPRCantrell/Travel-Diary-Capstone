@@ -1,3 +1,9 @@
 .photo-info{
     background-color: var(--sub-background);
+
+    img{
+        max-height: 50vh;
+        max-height: 50dvh;
+        max-width: 50vw;
+    }
 }

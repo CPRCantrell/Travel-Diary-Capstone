@@ -11,9 +11,10 @@ class Photos(Resource):
     @jwt_required()
     def post(self):
         user_id = get_jwt_identity()
-        file = request.files.get('photo')
+        file = request.files['file']
         file.filename = str(uuid.uuid4()) +'.'+ file.filename.split('.')[-1]
-        file.save(current_app.config['UPLOAD_FOLDER'])
+        destination = '/'.join([current_app.config['UPLOAD_FOLDER'], file.filename])
+        file.save(destination)
         new_photo = photo_schema.load(request.form)
         new_photo.filename = file.filename
         db.session.add(new_photo)
