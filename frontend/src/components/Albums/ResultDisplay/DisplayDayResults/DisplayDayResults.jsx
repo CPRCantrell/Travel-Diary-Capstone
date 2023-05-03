@@ -22,7 +22,7 @@ const DisplayDayResults = ({days}) => {
                 <tbody>
                     {days.map((day, index) => {
                         return(
-                            <tr key={index} onClick={()=>navigation(`/day-detail/${day.album_id}`)}>
+                            <tr key={index} onClick={()=>navigation(`/album-detail/${day.album_id}`)}>
                                 <td>{day.day_on_trip}</td>
                                 <td>{day.country}</td>
                                 <td>{day.state}</td>
