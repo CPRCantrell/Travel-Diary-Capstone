@@ -9,7 +9,7 @@ import SwitchInput from '../elements/SwitchInput/SwitchInput';
 
 import './NewTripForm.scss'
 
-const NewTripForm = () => {
+const NewTripForm = ({setModal}) => {
 
     const [user, token] = useAuth()
     const navigate = useNavigate()
@@ -81,10 +81,12 @@ const NewTripForm = () => {
     function handleSubmit(event){
         event.preventDefault()
         let date = formatDate()
+        debugger
         let [longitude, latitude] = getLogLat()
-        let submitCountry = country? (city? cityResult.features[0].properties.context.country.name : countryResult.features[0].properties.name) : undefined
-        let submitCity = city? cityResult.features[0].properties.name : undefined
-        let state = city && cityResult.features[0].properties.context.region ? cityResult.features[0].properties.context.region.name : undefined
+        let info = city? cityResult.features[0].properties : country? countryResult.features[0].properties : false
+        let submitCountry = info !== false? (city? (info.context.country? info.context.country.name : undefined) : info.name) : undefined
+        let submitCity = city? info.name : undefined
+        let state = city && info.context.region ? info.context.region.name : undefined
         let submitRegion = !(city && country)? region : undefined
         let albumInfo={
             title: title,
@@ -111,9 +113,8 @@ const NewTripForm = () => {
             headers:{
                 Authorization: 'Bearer ' + token,
             }})
-            debugger
-            window.location.reload(false)
-            navigate(`/album/${response.data.id}`)
+            navigate(`/album-detail/${response.data.id}`)
+            setModal(false)
         }
         catch{
             console.log('error in album submition')

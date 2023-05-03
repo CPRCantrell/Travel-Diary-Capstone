@@ -30,7 +30,7 @@ const Navbar = () => {
           <button onClick={()=>setNewTrip(!newTrip)}>+Trip</button>
         </div>
         <Modal show={newTrip} setShow={setNewTrip}>
-          <NewTripForm />
+          <NewTripForm setModal={setNewTrip}/>
         </Modal>
       </>
     :null}</>

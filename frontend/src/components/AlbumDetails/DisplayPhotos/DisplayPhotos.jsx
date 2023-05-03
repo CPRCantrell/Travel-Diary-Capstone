@@ -11,7 +11,9 @@ const DisplayPhotos = ({ photos }) => {
     const imgRef = useRef()
 
     useEffect(() => {
-        settextWidth(imgRef.current.scrollWidth+'px')
+        if(photos.length > 0){
+            settextWidth(imgRef.current.scrollWidth+'px')
+        }
     }, []);
 
     return (
