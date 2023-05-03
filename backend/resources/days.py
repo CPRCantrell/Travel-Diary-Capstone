@@ -44,7 +44,10 @@ class IndividualDay(Resource):
         user_id = get_jwt_identity()
         form_data = request.get_json()
         day = Day.query.get_or_404(day_id)
-        day.day_on_trip = form_data['day_on_trip']
+        if(form_data.get('day_complete') != None):
+            day.day_complete = form_data['day_complete']
+        if(form_data.get('day_on_trip') != None):
+            day.day_on_trip = form_data['day_on_trip']
         db.session.commit()
         return day_schema.dump(day), 200
 
@@ -54,10 +57,14 @@ class IndividualDay(Resource):
         form_data = request.get_json()
         day = Day.query.get_or_404(day_id)
 
-        day.entry = form_data['entry']
-        day.country  = form_data['country']
-        day.state = form_data['state']
-        day.city = form_data['city']
+        if(form_data.get('entry') != None):
+            day.entry = form_data['entry']
+        else:
+            if(form_data.get('country') != None):
+                day.country  = form_data['country']
+            if(form_data.get('state') != None):
+                day.state = form_data['state']
+            day.city = form_data['city']
 
         db.session.commit()
         return day_schema.dump(day), 200

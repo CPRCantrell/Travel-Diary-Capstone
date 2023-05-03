@@ -4,4 +4,27 @@
     .photo-area{
         display: flex;
     }
+
+    .city-form{
+        display: flex;
+        isolation: isolate;
+    }
+
+    .mapbox-search{
+        margin-top: 1.5rem;
+
+        &:hover{
+            cursor: text;
+        }
+
+        span{
+            color: var(--highlight);
+            transform: translateY(calc(-1 * (var(--sm-text) + (var(--xsm-padding)*2))));
+            font-size: var(--xsm-text);
+        }
+
+        i{
+            height: calc(var(--sm-text) + (var(--xsm-padding)*3));
+        }
+    }
 }

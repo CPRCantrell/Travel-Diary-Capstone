@@ -41,7 +41,10 @@ class IndividualAlbum(Resource):
         user_id = get_jwt_identity()
         form_data = request.get_json()
         album = Album.query.get_or_404(album_id)
-        album.private = form_data['private']
+        if(form_data.get('current_trip') != None):
+            album.current_trip = form_data['current_trip']
+        if(form_data.get('private') != None):
+            album.private = form_data['private']
         db.session.commit()
         return album_schema.dump(album), 200
 
