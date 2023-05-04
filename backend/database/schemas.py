@@ -134,9 +134,9 @@ albums_schema = AlbumSchema(many=True)
 class RequestSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     request = fields.String(required=True)
-    status = fields.String(required=True)
+    status = fields.String()
     user_id = fields.Integer(required=True)
-    requester_id = fields.Integer(required=True)
+    requester_id = fields.Integer()
     requester = ma.Nested(UserFriendSchema, many=False)
 
     class Meta:
@@ -149,7 +149,7 @@ class RequestSchema(ma.Schema):
 request_schema = RequestSchema()
 requests_schema = RequestSchema(many=True)
 class FriendSchema(ma.Schema):
-    user_id = fields.Integer(required=True)
+    user_id = fields.Integer()
     friend_id = fields.Integer(required=True)
     friend = ma.Nested(UserFriendSchema, many=False)
 
