@@ -8,11 +8,11 @@ import './AuthenticationPage.scss'
 const AuthenticationPage = () => {
     return(
         <main className='authentication-content'>
-            <ImageScroll animate={'down'}/>
+            <ImageScroll flipDirection={true} />
             <div className='auth-space'>
                 <AuthPanel />
             </div>
-            <ImageScroll animate={'up'}/>
+            <ImageScroll />
         </main>
 
     )
