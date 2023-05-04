@@ -1,4 +1,7 @@
 .friend-list{
+    background-color: var(--sub-background);
+    isolation: isolate;
+
     .friend-list-nav{
         display: flex;
     }

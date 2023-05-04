@@ -20,7 +20,7 @@ const RequestButton = ({ dataId, type='friend', disable=false, text='Send Friend
     }
 
     function friend(){
-        <button onClick={()=>sendFriendRequest()} disabled={disable}>{text}</button>
+        return(<button onClick={()=>sendFriendRequest()} disabled={disable}>{text}</button>)
     }
 
     async function sendFriendRequest(){
@@ -58,7 +58,7 @@ const RequestButton = ({ dataId, type='friend', disable=false, text='Send Friend
         }
     }
 
-    return buildButton();
+    return (<>{buildButton()}</>);
 }
 
 export default RequestButton;

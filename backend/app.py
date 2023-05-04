@@ -12,9 +12,9 @@ from resources.albums import Albums, IndividualAlbum
 from resources.days import Days, IndividualDay
 from resources.photos import Photos, IndividualPhoto
 from resources.tag import Tags, IndividualTag
-from resources.requests import Request
-from resources.friends import Friend, FindFriends
-from resources.notificatiion import Note, IndividualNote
+from resources.requests import Requests
+from resources.friends import Friends, FindFriends
+from resources.notification import Note, IndividualNote
 from dotenv import load_dotenv
 from os import environ
 
@@ -66,8 +66,8 @@ def create_routes():
     api.add_resource(IndividualPhoto, '/api/photo/<int:photo_id>')
     api.add_resource(Tags, '/api/tags')
     api.add_resource(IndividualTag, '/api/tag/<int:tag_id>')
-    api.add_resource(Request, '/api/requests')
-    api.add_resource(Friend, '/api/friends')
+    api.add_resource(Requests, '/api/requests')
+    api.add_resource(Friends, '/api/friends')
     api.add_resource(FindFriends, '/api/find-friends')
     api.add_resource(Note, '/api/notifications')
     api.add_resource(IndividualNote, '/api/notification/<int:note_id>')

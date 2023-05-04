@@ -30,7 +30,7 @@ const FriendList = () => {
     async function gatherFriends(){
         try{
             let response = await axios.get(baseUrl+'/friends',auth)
-            setPotentialFriends(response.data)
+            setFriends(response.data)
         }
         catch{
             console.log('issue gathering friends')
@@ -40,7 +40,7 @@ const FriendList = () => {
     async function gatherPotentialFriends(){
         try{
             let response = await axios.get(baseUrl+'/find-friends', auth)
-            setAddFriend(response.data)
+            setPotentialFriends(response.data)
         }
         catch{
             console.log('issue Finding Friends') //tell me about it
@@ -72,22 +72,26 @@ const FriendList = () => {
             </div>
             {addFriend?
                 <div>
-                    {potentialFriends.map((potentialFriend,index)=>{
-                        <div key={index}>
-                            <p>{potentialFriend.username}</p>
-                            <p>{`${potentialFriend.first_name} ${potentialFriend.last_name}`}</p>
-                            {selectButton(potentialFriend.friend_status,potentialFriend.user_id)}
-                        </div>
-                    })}
+                    {potentialFriends.length > 0 ? potentialFriends.map((potentialFriend,index)=>{
+                        return(
+                            <div key={index}>
+                                <p>{potentialFriend.username}</p>
+                                <p>{`${potentialFriend.first_name} ${potentialFriend.last_name}`}</p>
+                                {selectButton(potentialFriend.friend_status,potentialFriend.user_id)}
+                            </div>
+                        )
+                    }):null}
                 </div>
             :
                 <div>
-                    {friends.map((friend,index) => {
-                        <div key={index}>
-                            <p>{friend.friend.username}</p>
-                            <p>{`${friend.friend.first_name} ${friend.friend.last_name}`}</p>
-                        </div>
-                    })}
+                    {friends.length > 0 ? friends.map((friend,index) => {
+                        return(
+                            <div key={index}>
+                                <p>{friend.friend.username}</p>
+                                <p>{`${friend.friend.first_name} ${friend.friend.last_name}`}</p>
+                            </div>
+                        )
+                    }):null}
                 </div>
             }
         </div>

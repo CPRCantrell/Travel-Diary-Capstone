@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_req
 from flask_restful import Resource
 from database.models import db, Day, Album
 from database.schemas import day_schema, days_schema
-from notification import Notification
+from .notification import Notification
 
 class Days(Resource):
     @jwt_required()

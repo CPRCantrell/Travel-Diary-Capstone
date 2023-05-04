@@ -5,9 +5,9 @@ from database.models import db, Request
 from database.schemas import request_schema, requests_schema, friend_schema
 from sqlalchemy import and_
 from util.logger import logger
-from notification import Notification
+from .notification import Notification
 
-class Request(Resource):
+class Requests(Resource):
     @jwt_required()
     def post(self):
         requester_id = get_jwt_identity()
