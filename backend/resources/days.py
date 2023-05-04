@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_req
 from flask_restful import Resource
 from database.models import db, Day, Album
 from database.schemas import day_schema, days_schema
+from notification import Notification
 
 class Days(Resource):
     @jwt_required()
@@ -46,6 +47,10 @@ class IndividualDay(Resource):
         day = Day.query.get_or_404(day_id)
         if(form_data.get('day_complete') != None):
             day.day_complete = form_data['day_complete']
+            album = Album.query.get_or_404(day.album_id)
+            if not album.private:
+                note = Notification(user_id)
+                note.tell_friends_about_day(day, album)
         if(form_data.get('day_on_trip') != None):
             day.day_on_trip = form_data['day_on_trip']
         db.session.commit()

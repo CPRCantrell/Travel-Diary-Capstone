@@ -1,0 +1,12 @@
+.approve-decline-area{
+    display: flex;
+    gap: 1rem;
+
+    .appove{
+        background-color: rgb(145, 204, 145);
+    }
+
+    .decline{
+        background-color: rgb(160, 94, 94);
+    }
+}

@@ -87,3 +87,9 @@ class Friend(db.Model):
         user_id, friend_id,
         ),
     )
+
+class Notification(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    notification = db.Column(db.Text(), nullable=False)
+    navigate = db.Column(db.String(255))

@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Album, Day, Photo, Tag, Request, Friend
+from database.models import User, Album, Day, Photo, Tag, Request, Friend, Notification
 
 ma = Marshmallow()
 
@@ -162,3 +162,19 @@ class FriendSchema(ma.Schema):
 
 friend_schema = FriendSchema()
 friends_schema = FriendSchema(many=True)
+
+class NotificationSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    user_id = fields.Integer()
+    notification = fields.String(required=True)
+    navigate = fields.String()
+
+    class Meta:
+        fields = ('id','user_id','notification','navigate')
+
+    @post_load
+    def create_notification(self, data, **kwargs):
+        return Notification(**data)
+
+note_schema = NotificationSchema
+notes_schema = NotificationSchema(many=True)

@@ -13,12 +13,14 @@ const Modal = ({ children, show, setShow }) => {
     }
 
     return (
-        <div className='modal' style={{visibility: show? 'visible':'hidden'}} ref={modalRef} onClick={(e)=>handleOutsideClick(e)}>
-            <div className='m-area'>
-                <button className='m-close' onClick={()=>setShow(!show)}>X</button>
-                {children}
+        <>{show?
+            <div className='modal' ref={modalRef} onClick={(e)=>handleOutsideClick(e)}>
+                <div className='m-area'>
+                    <button className='m-close' onClick={()=>setShow(!show)}>X</button>
+                    {children}
+                </div>
             </div>
-        </div>
+        :null}</>
     );
 }
 
