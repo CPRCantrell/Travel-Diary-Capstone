@@ -1,8 +1,14 @@
+import React, { useState } from 'react';
+
+import Modal from '../../elements/Modal/Modal'
+import Share from './Share/Share';
 import defaultImage from '../../../assests/image-default.svg.png'
 
 import './DisplayAlbum.scss'
 
-const DisplayAlbum = ({ album }) => {
+const DisplayAlbum = ({ album, reload }) => {
+
+    const [share, setShare] = useState(false);
 
     function determineLocationDisplay(){
         if(album.all_days_in_same_city){
@@ -18,6 +24,7 @@ const DisplayAlbum = ({ album }) => {
         }
     }
 
+
     return (
         <div className='display-album'>
             <img src={defaultImage} alt='default' className='cover'/>
@@ -25,7 +32,21 @@ const DisplayAlbum = ({ album }) => {
                 <h1>{album.title}</h1>
                 <p>{`${album.month} ${album.day}, ${album.year}`}</p>
                 {determineLocationDisplay()}
+                {album.users.length > 1?
+                    <div>
+                        <p>Currently Shared With:</p>
+                        {album.users.map((user, index)=>{
+                            return(
+                                <p key={index}>{`${user.username} : ${user.first_name} ${user.last_name}`}</p>
+                            )
+                        })}
+                    </div>
+                :null}
             </div>
+            <button onClick={()=>setShare(!share)}>Share</button>
+            <Modal show={share} setShow={()=>setShare(!share)} >
+                <Share album={album} reload={reload} />
+            </Modal>
         </div>
     );
 }

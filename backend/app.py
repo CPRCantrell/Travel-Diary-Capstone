@@ -71,4 +71,5 @@ def create_routes():
     api.add_resource(FindFriends, '/api/find-friends')
     api.add_resource(Note, '/api/notifications')
     api.add_resource(IndividualNote, '/api/notification/<int:note_id>')
+
     return api

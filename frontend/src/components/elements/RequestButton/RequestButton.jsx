@@ -5,14 +5,14 @@ import useGlobalVariables from '../../../hooks/useGlobalVariables';
 
 import './RequestButton.scss'
 
-const RequestButton = ({ dataId, type='friend', disable=false, text='Send Friend Request', reload }) => {
+const RequestButton = ({ info, sendTo, type='friend', disable=false, text='Send Friend Request', reload }) => {
 
     const [triggerAcceptDecline, setTriggerAcceptDecline] = useState(false);
     const [baseURL, auth] = useGlobalVariables()
 
     function buildButton(){
         switch(type){
-            case 'accept/decline-friend':
+            case 'accept/decline':
                 return acceptDecline()
             default:
                 return friend()
@@ -25,7 +25,7 @@ const RequestButton = ({ dataId, type='friend', disable=false, text='Send Friend
 
     async function sendFriendRequest(){
         try{
-            let requestPackage = {request:'friend', user_id:dataId}
+            let requestPackage = {request:'friend', user_id:sendTo}
             let response = await axios.post(baseURL+'/requests',requestPackage,auth)
             reload()
         }
@@ -40,17 +40,17 @@ const RequestButton = ({ dataId, type='friend', disable=false, text='Send Friend
             <button onClick={()=>setTriggerAcceptDecline(!triggerAcceptDecline)}>{text}</button>
         :
             <div className='aprrove-decline-area'>
-                <button className='approve' onClick={()=>respondToFriendRequest('approved')}>Aprrove</button>
-                <button className='decline' onClick={()=>respondToFriendRequest('declined')}>Decline</button>
+                <button className='approve' onClick={()=>respondToRequest('approved')}>Approve</button>
+                <button className='decline' onClick={()=>respondToRequest('declined')}>Decline</button>
             </div>
         }
         </>)
     }
 
-    async function respondToFriendRequest(status){
+    async function respondToRequest(status){
         try{
-            let requestPackage = {request:'friend', status:status, requester_id:dataId}
-            let request_response = await axios.patch(baseURL+'/requests',requestPackage,auth)
+            info.status = status
+            let request_response = await axios.patch(baseURL+'/requests',info,auth)
             reload()
         }
         catch{

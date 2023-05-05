@@ -76,6 +76,7 @@ class Request(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     request = db.Column(db.String(255), nullable=False)
     status = db.Column(db.String(255), nullable=False, default='pending')
+    data = db.Column(db.String(255))
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
     requester_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
     requester = db.relationship('User', foreign_keys=[requester_id])

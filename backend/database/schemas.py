@@ -135,12 +135,13 @@ class RequestSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     request = fields.String(required=True)
     status = fields.String()
+    data = fields.String()
     user_id = fields.Integer(required=True)
     requester_id = fields.Integer()
     requester = ma.Nested(UserFriendSchema, many=False)
 
     class Meta:
-        fields = ('id', 'request', 'status', 'user_id', 'requester_id', 'requester')
+        fields = ('id', 'request', 'status', 'data', 'user_id', 'requester_id', 'requester')
 
     @post_load
     def create_request(self, data, **kwargs):

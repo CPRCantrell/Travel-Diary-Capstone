@@ -81,9 +81,9 @@ const Notification = () => {
                     {requests.map((request, index)=>{
                         return(
                             <div key={index}>
-                                <p>{request.requester.username}</p>
-                                <p>{`${request.requester.first_name} ${request.requester.last_name}`}</p>
-                                <RequestButton dataId={request.requester_id} type={'accept/decline-friend'} text={'Respond to Request'} reload={()=>setReload(!reload)}/>
+                                <p>{`${request.request} request from:`}</p>
+                                <p>{`${request.requester.username} : ${request.requester.first_name} ${request.requester.last_name}`}</p>
+                                <RequestButton info={request} type={'accept/decline'} text={'Respond to Request'} reload={()=>setReload(!reload)}/>
                             </div>
                         )
                     })}

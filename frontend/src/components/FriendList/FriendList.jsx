@@ -54,7 +54,7 @@ const FriendList = () => {
             case 'pending_friend':
                 return <RequestButton disable={true} text={'Sent'} />
             case 'waiting_friend':
-                return <RequestButton dataId={id} type={'accept/decline-friend'} text={'Respond to Request'} reload={()=>setReload(!reload)}/>
+                return <RequestButton sendTo={id} type={'accept/decline'} text={'Respond to Request'} reload={()=>setReload(!reload)}/>
             default:
                 return <RequestButton dataId={id} reload={()=>setReload(!reload)}/>
         }

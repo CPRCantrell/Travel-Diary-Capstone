@@ -68,3 +68,28 @@ Data:
 Daybreak189 (Eric Cantrell) - SENT: friend request to: Tester2 (Testersa LaTest)
 
 
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 15:49:32
+Data:
+User (Eric Cantrell) - SENT: friend request to: Tester (Tester McTesty)
+
+
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 15:56:58
+Data:
+Tester (Tester McTesty) - approved friend request sent by: User (Eric Cantrell)
+
+
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 16:19:1
+Data:
+Tester (Tester McTesty) - SENT: share request to: User (Eric Cantrell)
+
+
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 16:31:30
+Data:
+User (Eric Cantrell) - approved share request sent by: Tester (Tester McTesty)
+
+
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 16:35:53
+Data:
+User (Eric Cantrell) - approved share request sent by: Tester (Tester McTesty)
+
+

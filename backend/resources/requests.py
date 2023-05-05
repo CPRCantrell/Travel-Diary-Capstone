@@ -1,7 +1,7 @@
 from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, Request
+from database.models import db, Request, User, Album
 from database.schemas import request_schema, requests_schema, friend_schema
 from util.logger import logger
 from .notification import Notifications
@@ -38,7 +38,7 @@ class Requests(Resource):
             if update_request_status.request == 'friend':
                 self.set_friend({'user_id':update_request_status.user_id,'friend_id':update_request_status.requester_id})
             if update_request_status.request == 'share':
-                self.share_album({}) # <---------------------------------------------------Need to do after joint table
+                self.add_share({'user_id':update_request_status.user_id, 'album_id': update_request_status.data})
             self.delete_request(update_request_status)
         return 'Success', 200
 
@@ -50,6 +50,12 @@ class Requests(Resource):
         exchange_friendship = friend_schema.load(exchange_friendship)
         db.session.add(exchange_friendship)
 
+        db.session.commit()
+
+    def add_share(self, share_info):
+        user = User.query.get_or_404(share_info['user_id'])
+        album = Album.query.get_or_404(share_info['album_id'])
+        album.users.append(user)
         db.session.commit()
 
     def delete_request(self, del_request):

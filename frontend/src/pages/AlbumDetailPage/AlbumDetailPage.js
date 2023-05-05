@@ -56,7 +56,7 @@ const AlbumDetailPage = () => {
     return (
         <main className='album-details content'>
             {!loading?<>
-                <DisplayAlbum album={album.current} />
+                <DisplayAlbum album={album.current} reload={()=>setLoading(!loading)}/>
                 {currentTrip? <DayForm album={album.current} auth={auth} setReload={setLoading}/> : null}
                 <DisplayDays days={days.current} album={album}/>
             </>:null}
