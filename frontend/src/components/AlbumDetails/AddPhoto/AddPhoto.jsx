@@ -56,7 +56,7 @@ const AddPhoto = ({auth, day, setReload }) => {
     return (
         <div>
             <DragDropInput ref={imageRef} selectedFile={selectedPhoto} setSelectedFile={(response)=>handleImage(response)} />
-            <Modal show={photoModal} setShow={setPhotoModal}>
+            <Modal show={photoModal} setShow={()=>setPhotoModal(false)}>
                 <form className='photo-info' onSubmit={(e)=>handleSubmit(e)}>
                     {selectedPhoto ? <img src={URL.createObjectURL(selectedPhoto)} alt='preview of file'/>:null}
                     <div>

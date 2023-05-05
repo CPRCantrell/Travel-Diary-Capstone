@@ -8,7 +8,7 @@ const Modal = ({ children, show, setShow }) => {
 
     function handleOutsideClick(event){
         if(event.target === modalRef.current){
-            setShow(!show)
+            setShow()
         }
     }
 
@@ -16,7 +16,7 @@ const Modal = ({ children, show, setShow }) => {
         <>{show?
             <div className='modal' ref={modalRef} onClick={(e)=>handleOutsideClick(e)}>
                 <div className='m-area'>
-                    <button className='m-close' onClick={()=>setShow(!show)}>X</button>
+                    <button className='m-close' onClick={()=>setShow()}>X</button>
                     {children}
                 </div>
             </div>

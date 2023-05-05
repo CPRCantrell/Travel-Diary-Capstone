@@ -31,7 +31,7 @@ class FindFriends(Resource):
                         friend_status = 'pending_friend'
                 for recieved in recieved_request:
                     if(user.id == recieved.requester_id and recieved.request == 'friend'):
-                        friend_status = ['waiting_friend']
+                        friend_status = 'waiting_friend'
                 response.append({
                     'user_id': user.id,
                     'username': user.username,

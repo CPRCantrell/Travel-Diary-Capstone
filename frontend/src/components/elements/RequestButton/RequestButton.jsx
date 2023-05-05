@@ -37,7 +37,7 @@ const RequestButton = ({ dataId, type='friend', disable=false, text='Send Friend
     function acceptDecline(){
         return (<>
         {!triggerAcceptDecline?
-            <button onClick={setTriggerAcceptDecline(!triggerAcceptDecline)}>{text}</button>
+            <button onClick={()=>setTriggerAcceptDecline(!triggerAcceptDecline)}>{text}</button>
         :
             <div className='aprrove-decline-area'>
                 <button className='approve' onClick={()=>respondToFriendRequest('approved')}>Aprrove</button>

@@ -1,0 +1,25 @@
+Transaction: REQUEST	Date: 2023-MAY-4	Time: 21:51:19
+Data:
+Tester2 (Testersa LaTest) - approved friend request sent by: Daybreak189 (Eric Cantrell)
+
+
+Transaction: REQUEST	Date: 2023-MAY-4	Time: 22:28:25
+Data:
+Tester (Test McTest) - SENT: friend request to: Daybreak189 (Eric Cantrell)
+
+
+Transaction: REQUEST	Date: 2023-MAY-4	Time: 22:29:40
+Data:
+Daybreak189 (Eric Cantrell) - declined friend request sent by: Tester (Test McTest)
+
+
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 10:58:28
+Data:
+Tester (Test McTest) - SENT: friend request to: Daybreak189 (Eric Cantrell)
+
+
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 11:1:14
+Data:
+Daybreak189 (Eric Cantrell) - declined friend request sent by: Tester (Test McTest)
+
+

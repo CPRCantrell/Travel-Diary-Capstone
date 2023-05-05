@@ -46,7 +46,8 @@ class Note(Resource):
 class IndividualNote(Resource):
     @jwt_required()
     def delete(self, note_id):
-        notification = Notification.query.get_or_404(id=note_id)
+        user_id = get_jwt_identity()
+        notification = Notification.query.get_or_404(note_id)
         db.session.delete(notification)
         db.session.commit()
         return "success", 200

@@ -63,3 +63,8 @@ Data:
 Tester (Test McTest) - approved friend request sent by: Tester2 (Testersa LaTest)
 
 
+Transaction: REQUEST	Date: 2023-MAY-4	Time: 21:42:52
+Data:
+Daybreak189 (Eric Cantrell) - SENT: friend request to: Tester2 (Testersa LaTest)
+
+

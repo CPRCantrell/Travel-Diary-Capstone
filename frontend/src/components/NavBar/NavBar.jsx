@@ -1,4 +1,4 @@
-import React, { useState ,useContext, useEffect } from "react";
+import React, { useState ,useContext, useEffect, useLayoutEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 
 import AuthContext from "../../context/AuthContext";
@@ -11,34 +11,32 @@ import "./NavBar.scss";
 
 const Navbar = () => {
   const { logoutUser, user } = useContext(AuthContext);
-  const [newTrip, setNewTrip] = useState(false);
-  const [friends, setFriends] = useState(false);
+  const [modal, setModal] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setNewTrip(false)
-  }, [user]);
 
   return (
     <>{user ?
       <>
         <div className="nav-bar">
           <NavLink activeclassname='active' to="/home" className="link">
-            <button onClick={()=>setNewTrip(false)}>Home</button>
+            <button onClick={()=>setModal('')}>Home</button>
           </NavLink>
           <NavLink activeclassname='active' to="/albums" className="link">
-            <button onClick={()=>setNewTrip(false)}>Albums</button>
+            <button onClick={()=>setModal('')}>Albums</button>
           </NavLink>
           <button onClick={logoutUser}>Logout</button>
-          <button onClick={()=>setNewTrip(!newTrip)}>+Trip</button>
-          <button onClick={()=>setFriends(!friends)}>friends</button>
-          <Notification />
+          <button onClick={()=>setModal('trip')}>+Trip</button>
+          <button onClick={()=>setModal('friend')}>friends</button>
+          <button onClick={()=>setModal('note')}>Notification</button>
         </div>
-        <Modal show={newTrip} setShow={setNewTrip}>
-          <NewTripForm setModal={setNewTrip}/>
+        <Modal show={modal == 'trip'} setShow={()=>setModal('')}>
+          <NewTripForm setModal={()=>setModal('')}/>
         </Modal>
-        <Modal show={friends} setShow={setFriends}>
+        <Modal show={modal == 'friend'} setShow={()=>setModal('')}>
           <FriendList />
+        </Modal>
+        <Modal show={modal == 'note'} setShow={()=>setModal('')}>
+          <Notification />
         </Modal>
       </>
     :null}</>
