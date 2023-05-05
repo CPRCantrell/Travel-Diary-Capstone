@@ -3,6 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+user_albums = db.Table('user_albums',
+                    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+                    db.Column('album_id', db.Integer(), db.ForeignKey('album.id'))
+                    )
+
 class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(255), nullable=False, unique=True)
@@ -19,6 +24,14 @@ class User(db.Model):
 
     def __repr__(self):
         return self.username
+
+class Photo(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    filename = db.Column(db.Text(), nullable=False)
+    caption = db.Column(db.Text())
+    day_id = db.Column(db.Integer(), db.ForeignKey('day.id'), nullable=False)
+    private = db.Column(db.Boolean(), nullable=False)
+    tags = db.relationship('Tag')
 
 class Album(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -37,7 +50,7 @@ class Album(db.Model):
     private = db.Column(db.Boolean(), nullable=False)
     current_trip = db.Column(db.Boolean(), default=True)
     cover_image = db.Column(db.Integer(), db.ForeignKey('photo.id'))
-    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    users = db.relationship('User', secondary=user_albums, backref='albums')
     days = db.relationship('Day')
     cover = db.relationship('Photo')
 
@@ -52,22 +65,12 @@ class Day(db.Model):
     album_id = db.Column(db.Integer(), db.ForeignKey('album.id'), nullable=False)
     photos = db.relationship('Photo')
 
-
-class Photo(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
-    filename = db.Column(db.Text(), nullable=False)
-    caption = db.Column(db.Text())
-    day_id = db.Column(db.Integer(), db.ForeignKey('day.id'), nullable=False)
-    private = db.Column(db.Boolean(), nullable=False)
-    tags = db.relationship('Tag')
-
 class Tag(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     photo_id = db.Column(db.Integer(), db.ForeignKey('photo.id'), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     friend_without_user_id = db.Column(db.String(255))
     tagged_user = db.relationship('User')
-
 
 class Request(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

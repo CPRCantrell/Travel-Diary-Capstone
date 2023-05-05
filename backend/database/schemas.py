@@ -33,12 +33,13 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 class UserFriendSchema(ma.Schema):
+    id = fields.String()
     username = fields.String(required=True)
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
 
     class Meta:
-        fields = ("username", "first_name", "last_name")
+        fields = ("id","username", "first_name", "last_name")
 
 user_friend_schema = UserFriendSchema()
 users_friend_schema = UserFriendSchema(many=True)
@@ -117,12 +118,11 @@ class AlbumSchema(ma.Schema):
     private = fields.Boolean(required=True)
     corrent_trip = fields.Boolean()
     cover_image = fields.Integer()
-    user_id = fields.Integer()
     days = ma.Nested(DaySchema, many=True)
-    cover = ma.Nested(PhotoSchema)
+    users = ma.Nested(UserFriendSchema, many=True)
 
     class Meta:
-        fields = ('id', 'title', 'latitude', 'longitude', 'region', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'state', 'year', 'month', 'day', 'private', 'user_id', 'days','cover_image', 'cover', 'current_trip')
+        fields = ('id', 'title', 'latitude', 'longitude', 'region', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'state', 'year', 'month', 'day', 'private', 'days','cover_image', 'cover', 'current_trip', 'users')
 
     @post_load
     def create_album(self, data, **kwargs):

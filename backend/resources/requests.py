@@ -34,9 +34,11 @@ class Requests(Resource):
         logger.log_request(update_request_status)
         if update_request_status.status == 'approved' or update_request_status.status == 'declined':
             note = Notifications(update_request_status.requester_id)
-            note.friend_request_was(update_request_status)
-            if update_request_status.status == 'approved':
+            note.request_was(update_request_status)
+            if update_request_status.request == 'friend':
                 self.set_friend({'user_id':update_request_status.user_id,'friend_id':update_request_status.requester_id})
+            if update_request_status.request == 'share':
+                self.share_album({}) # <---------------------------------------------------Need to do after joint table
             self.delete_request(update_request_status)
         return 'Success', 200
 

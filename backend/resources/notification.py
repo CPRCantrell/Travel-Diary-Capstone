@@ -18,9 +18,9 @@ class Notifications():
         db.session.add(notification)
         db.session.commit()
 
-    def friend_request_was(self, request):
+    def request_was(self, request):
         wanted_friend = User.query.get_or_404(request.user_id)
-        note = f'Your Friend Request to {wanted_friend.username} was {request.status}.'
+        note = f'Your {request.request} Request to {wanted_friend.username} was {request.status}.'
         self.commit_notification({'user_id':self.user.id,'notification':note})
 
     def tell_friends_about_day(self, day, album):

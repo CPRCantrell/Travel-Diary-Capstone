@@ -1,7 +1,7 @@
 from flask import request, send_from_directory, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, Photo, Album
+from database.models import db, Photo, Album, User
 from database.schemas import photo_schema, photos_schema
 from werkzeug.utils import secure_filename
 import uuid
@@ -23,9 +23,9 @@ class Photos(Resource):
     @jwt_required()
     def get(self):
         user_id = get_jwt_identity()
-        albums = Album.query.filter_by(user_id=user_id)
+        user = User.query.get_or_404(user_id)
         photos = []
-        for album in albums:
+        for album in user.albums:
             for day in album.days:
                 user_photos = Photo.query.filter_by(day_id=day.id)
                 photos.extend(photos_schema.dump(user_photos))

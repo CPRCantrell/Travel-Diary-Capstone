@@ -1,4 +1,4 @@
-import React, { useState ,useContext, useEffect, useLayoutEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 
 import AuthContext from "../../context/AuthContext";
@@ -14,6 +14,11 @@ const Navbar = () => {
   const [modal, setModal] = useState('');
   const navigate = useNavigate();
 
+  function handleLogout(){
+    setModal('')
+    logoutUser()
+  }
+
   return (
     <>{user ?
       <>
@@ -24,7 +29,7 @@ const Navbar = () => {
           <NavLink activeclassname='active' to="/albums" className="link">
             <button onClick={()=>setModal('')}>Albums</button>
           </NavLink>
-          <button onClick={logoutUser}>Logout</button>
+          <button onClick={()=>handleLogout()}>Logout</button>
           <button onClick={()=>setModal('trip')}>+Trip</button>
           <button onClick={()=>setModal('friend')}>friends</button>
           <button onClick={()=>setModal('note')}>Notification</button>

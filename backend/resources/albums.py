@@ -1,7 +1,7 @@
 from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, Album
+from database.models import db, Album, User
 from database.schemas import album_schema, albums_schema
 
 class Albums(Resource):
@@ -10,7 +10,8 @@ class Albums(Resource):
         user_id = get_jwt_identity()
         form_data = request.get_json()
         new_album = album_schema.load(form_data)
-        new_album.user_id = user_id
+        user = User.query.get_or_404(user_id)
+        new_album.users.append(user)
         db.session.add(new_album)
         db.session.commit()
         return album_schema.dump(new_album), 201
@@ -18,8 +19,8 @@ class Albums(Resource):
     @jwt_required()
     def get(self):
         user_id = get_jwt_identity()
-        user_albums = Album.query.filter_by(user_id=user_id)
-        return albums_schema.dump(user_albums), 200
+        user = User.query.get_or_404(user_id)
+        return albums_schema.dump(user.albums), 200
 
 class IndividualAlbum(Resource):
     @jwt_required()
