@@ -3,9 +3,8 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_req
 from flask_restful import Resource
 from database.models import db, Request
 from database.schemas import request_schema, requests_schema, friend_schema
-from sqlalchemy import and_
 from util.logger import logger
-from .notification import Notification
+from .notification import Notifications
 
 class Requests(Resource):
     @jwt_required()
@@ -29,21 +28,19 @@ class Requests(Resource):
     def patch(self):
         user_id = get_jwt_identity()
         status = request.get_json()
-        update_request_status = Request.query.filter(and_(user_id=user_id, requester_id=status['requester_id'], request=status['request'], status='pending')).first()
+        update_request_status = Request.query.filter_by(**{'user_id':user_id,'requester_id':status['requester_id'], 'request': status['request'], 'status':'pending'}).first()
         update_request_status.status = status['status']
         db.session.commit()
         logger.log_request(update_request_status)
         if update_request_status.status == 'approved' or update_request_status.status == 'declined':
-            try:
-                note = Notification(update_request_status.requester_id)
-                note.friend_request_was(update_request_status)
-                if update_request_status.status == 'approved':
-                    self.set_friend({'user_id':update_request_status.user_id,'friend_id':update_request_status.requester_id})
-                self.delete_request(update_request_status)
-            except: print('issues in reques patch accept/decline')
+            note = Notifications(update_request_status.requester_id)
+            note.friend_request_was(update_request_status)
+            if update_request_status.status == 'approved':
+                self.set_friend({'user_id':update_request_status.user_id,'friend_id':update_request_status.requester_id})
+            self.delete_request(update_request_status)
         return 'Success', 200
 
-    def set_friend(friend_info):
+    def set_friend(self,friend_info):
         add_friend = friend_schema.load(friend_info)
         db.session.add(add_friend)
 

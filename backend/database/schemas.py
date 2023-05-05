@@ -176,5 +176,5 @@ class NotificationSchema(ma.Schema):
     def create_notification(self, data, **kwargs):
         return Notification(**data)
 
-note_schema = NotificationSchema
+note_schema = NotificationSchema()
 notes_schema = NotificationSchema(many=True)

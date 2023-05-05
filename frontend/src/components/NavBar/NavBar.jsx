@@ -5,6 +5,7 @@ import AuthContext from "../../context/AuthContext";
 import NewTripForm from "../NewTripForm/NewTripForm"
 import Modal from "../elements/Modal/Modal";
 import FriendList from "../FriendList/FriendList";
+import Notification from "../Notifications/Notification";
 
 import "./NavBar.scss";
 
@@ -31,6 +32,7 @@ const Navbar = () => {
           <button onClick={logoutUser}>Logout</button>
           <button onClick={()=>setNewTrip(!newTrip)}>+Trip</button>
           <button onClick={()=>setFriends(!friends)}>friends</button>
+          <Notification />
         </div>
         <Modal show={newTrip} setShow={setNewTrip}>
           <NewTripForm setModal={setNewTrip}/>

@@ -3,7 +3,7 @@ from flask_restful import Resource
 from database.schemas import note_schema, notes_schema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-class Notification():
+class Notifications():
     def __init__(self, user_id) -> None:
         self.user = User.query.get_or_404(user_id)
         self.all_friends = Friend.query.filter_by(user_id = user_id)
@@ -20,7 +20,7 @@ class Notification():
 
     def friend_request_was(self, request):
         wanted_friend = User.query.get_or_404(request.user_id)
-        note = f'Your Friend Request to {wanted_friend.username} was {request.staus}.'
+        note = f'Your Friend Request to {wanted_friend.username} was {request.status}.'
         self.commit_notification({'user_id':self.user.id,'notification':note})
 
     def tell_friends_about_day(self, day, album):

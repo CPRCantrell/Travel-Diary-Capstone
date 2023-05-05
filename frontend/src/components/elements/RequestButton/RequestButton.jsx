@@ -26,7 +26,7 @@ const RequestButton = ({ dataId, type='friend', disable=false, text='Send Friend
     async function sendFriendRequest(){
         try{
             let requestPackage = {request:'friend', user_id:dataId}
-            let response = await axios.post(baseURL+'/requests')
+            let response = await axios.post(baseURL+'/requests',requestPackage,auth)
             reload()
         }
         catch{
