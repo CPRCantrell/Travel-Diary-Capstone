@@ -8,7 +8,7 @@ from flask_migrate import Migrate
 from database.models import db
 from database.schemas import ma
 from resources.auth import LoginResource, RegisterResource
-from resources.albums import Albums, IndividualAlbum
+from resources.albums import Albums, IndividualAlbum, AlbumForFriend, AlbumsForFriends
 from resources.days import Days, IndividualDay
 from resources.photos import Photos, IndividualPhoto
 from resources.tag import Tags, IndividualTag
@@ -71,5 +71,8 @@ def create_routes():
     api.add_resource(FindFriends, '/api/find-friends')
     api.add_resource(Note, '/api/notifications')
     api.add_resource(IndividualNote, '/api/notification/<int:note_id>')
+    api.add_resource(AlbumForFriend, '/api/al/<string:username>/<int:album_id>')
+    api.add_resource(AlbumsForFriends, '/api/albs/<string:username>')
+
 
     return api

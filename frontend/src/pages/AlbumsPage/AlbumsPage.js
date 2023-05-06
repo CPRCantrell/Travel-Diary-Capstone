@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createRoutesFromChildren, useParams } from 'react-router-dom';
 
 import DisplayAllAlbums from '../../components/Albums/DisplayAllAbums/DisplayAllAlbums';
 import DisplayAlbumResults from '../../components/Albums/ResultDisplay/DisplayAlbumResults/DisplayAlbumResults';
@@ -15,12 +16,13 @@ const AlbumsPage = () => {
     const [results, setResults] = useState(undefined);
     const [user, token] = useAuth()
     const auth = {headers:{Authorization: 'Bearer ' + token}}
+    const { username } = useParams()
 
     return (
         <main className='albums content'>
-            <Search setResults={setResults} auth={auth} />
+            <Search setResults={setResults} auth={auth} username={username}/>
             {results === undefined ? <>
-                <DisplayAllAlbums />
+                <DisplayAllAlbums  username={username}/>
                 </>:<>
                 {results.albums.length > 0 ? <DisplayAlbumResults albums={results.albums} /> :null}
                 {results.days.length > 0 ? <DisplayDayResults days={results.days} /> :null}

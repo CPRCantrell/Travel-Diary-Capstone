@@ -6,7 +6,7 @@ import defaultImage from '../../../assests/image-default.svg.png'
 
 import './DisplayAlbum.scss'
 
-const DisplayAlbum = ({ album, reload }) => {
+const DisplayAlbum = ({ album, reload, showShare }) => {
 
     const [share, setShare] = useState(false);
 
@@ -43,7 +43,7 @@ const DisplayAlbum = ({ album, reload }) => {
                     </div>
                 :null}
             </div>
-            <button onClick={()=>setShare(!share)}>Share</button>
+            {showShare? <button onClick={()=>setShare(!share)}>Share</button>:null}
             <Modal show={share} setShow={()=>setShare(!share)} >
                 <Share album={album} reload={reload} />
             </Modal>

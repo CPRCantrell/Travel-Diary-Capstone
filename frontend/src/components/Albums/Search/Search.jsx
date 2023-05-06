@@ -1,25 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 import useGlobalVariables from '../../../hooks/useGlobalVariables';
 
 import './Search.scss'
 
-const Search = ({ setResults, auth }) => {
+const Search = ({ setResults, auth, username }) => {
 
     const [search, setSearch] = useState('');
-    const [albums, setAlbums] = useState([]);
-    const [days, setDays] = useState([]);
-    const [photos, setPhotos] = useState([]);
     const [friends, setFriends] = useState([]);
+
+    const albums = useRef([]);
+    const days = useRef([]);
+    const photos = useRef([]);
 
     const [baseUrl] = useGlobalVariables()
 
     useEffect(() => {
-        getAllAlbumInfo()
-        getAllDayInfo()
-        getAllPhotoInfo()
+        if(username === undefined){
+            getAllAlbumInfo()
+            getAllDayInfo()
+            getAllPhotoInfo()
+        }else{
+            getFriendVision()
+        }
     }, []);
+
+    useEffect(() => {
+        if(username === undefined){
+            getAllAlbumInfo()
+            getAllDayInfo()
+            getAllPhotoInfo()
+        }else{
+            getFriendVision()
+        }
+    }, [username]);
 
     useEffect(() => {
         if(search===''){setResults(undefined)}
@@ -32,10 +47,22 @@ const Search = ({ setResults, auth }) => {
         }
     }, [search]);
 
+    async function getFriendVision(){
+        try{
+            let response = await axios.get(baseUrl+'/albs/'+ username, auth)
+            albums.current = response.data
+            if(days.current.length === 0){albums.current.forEach(album => days.current = days.current.concat(album.days))}
+            if(photos.current.length === 0){days.current.forEach(day => photos.current = photos.current.concat(day.photos))}
+        }
+        catch{
+            console.log('issue getting rated friend album info')
+        }
+    }
+
     async function getAllAlbumInfo(){
         try{
             let response = await axios.get(baseUrl+'/albums',auth)
-            setAlbums(response.data)
+            albums.current = response.data
         }
         catch{
             console.log('issue gathering album info')
@@ -45,7 +72,7 @@ const Search = ({ setResults, auth }) => {
     async function getAllDayInfo(){
         try{
             let response = await axios.get(baseUrl+'/days',auth)
-            setDays(response.data)
+            days.current = response.data
         }
         catch{
             console.log('issue gathering days info')
@@ -55,7 +82,7 @@ const Search = ({ setResults, auth }) => {
     async function getAllPhotoInfo(){
         try{
             let response = await axios.get(baseUrl+'/photos',auth)
-            setPhotos(response.data)
+            photos.current = response.data
         }
         catch{
             console.log('issue gathering photos info')
@@ -63,7 +90,7 @@ const Search = ({ setResults, auth }) => {
     }
 
     function searchAlbums(){
-        return albums.filter(album=>{
+        return albums.current.filter(album=>{
             if(album.title.toLowerCase().includes(search)){return true}
             if(album.all_days_in_same_country){if(album.country.toLowerCase().includes(search)){return true}}
             if(album.all_days_in_same_city){if(album.city.toLowerCase().includes(search)){return true}}
@@ -76,7 +103,7 @@ const Search = ({ setResults, auth }) => {
         })
     }
     function searchDays(){
-        return days.filter(day=>{
+        return days.current.filter(day=>{
             if(day.entry !== null){if(day.entry.toLowerCase().includes(search)){return true}}
             if(day.country !== null){if(day.country.toLowerCase().includes(search)){return true}}
             if(day.state !== null){if(day.state.toLowerCase().includes(search)){return true}}
@@ -86,7 +113,7 @@ const Search = ({ setResults, auth }) => {
         })
     }
     function searchPhotos(){
-        return photos.filter(photo=>{
+        return photos.current.filter(photo=>{
             if(photo.caption !== null){if(photo.caption.toLowerCase().includes(search)){return true}}
             return 0
         })

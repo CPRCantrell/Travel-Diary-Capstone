@@ -23,3 +23,13 @@ Data:
 Daybreak189 (Eric Cantrell) - declined friend request sent by: Tester (Test McTest)
 
 
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 21:36:59
+Data:
+Tester (Tester McTesty) - SENT: share request to: User (Eric Cantrell)
+
+
+Transaction: REQUEST	Date: 2023-MAY-5	Time: 21:37:47
+Data:
+User (Eric Cantrell) - approved share request sent by: Tester (Tester McTesty)
+
+

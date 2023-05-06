@@ -38,7 +38,7 @@ const Navbar = () => {
           <NewTripForm setModal={()=>setModal('')}/>
         </Modal>
         <Modal show={modal == 'friend'} setShow={()=>setModal('')}>
-          <FriendList />
+          <FriendList setModal={()=>setModal('')} />
         </Modal>
         <Modal show={modal == 'note'} setShow={()=>setModal('')}>
           <Notification />

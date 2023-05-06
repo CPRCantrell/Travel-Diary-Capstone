@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import useAuth from '../../hooks/useAuth';
+import useGlobalVariables from '../../hooks/useGlobalVariables';
 import DisplayAlbum from '../../components/AlbumDetails/DisplayAlbum/DisplayAlbum';
 import DisplayDays from '../../components/AlbumDetails/DisplayDays/DisplayDays';
 import DayForm from '../../components/AlbumDetails/DayForm/DayForm';
@@ -11,9 +11,8 @@ import './AlbumDetailPage.scss'
 
 const AlbumDetailPage = () => {
 
-    const { albumId } = useParams()
-    const [user, token] = useAuth()
-    const auth = {headers:{Authorization: 'Bearer ' + token}}
+    const { albumId, username } = useParams()
+    const [baseUrl, auth] = useGlobalVariables()
 
     const [loading, setLoading] = useState(true);
     const [currentTrip, setcurrentTrip] = useState(false);
@@ -36,15 +35,15 @@ const AlbumDetailPage = () => {
 
     async function getAlbumInfo(){
         try{
-            let response = await axios.get(`http://127.0.0.1:5000/api/album/${albumId}`,{
-                headers:{
-                Authorization: 'Bearer ' + token
-                }
-            })
+            let response
+            if(username === undefined){
+                response = await axios.get(baseUrl+'/album/'+ albumId,auth)
+            }else{
+                response = await axios.get(baseUrl+'/al/'+ username + '/' + albumId,auth)
+            }
             album.current = response.data
             days.current = response.data.days
             if(photos.current.length === 0){days.current.forEach(day => photos.current = photos.current.concat(day.photos))}
-            if(tags.current.length === 0){photos.current.forEach(photoTags => tags.current = tags.current.concat(photoTags.tags))}
             setcurrentTrip(response.data.current_trip)
             setLoading(false)
         }
@@ -56,8 +55,8 @@ const AlbumDetailPage = () => {
     return (
         <main className='album-details content'>
             {!loading?<>
-                <DisplayAlbum album={album.current} reload={()=>setLoading(!loading)}/>
-                {currentTrip? <DayForm album={album.current} auth={auth} setReload={setLoading}/> : null}
+                <DisplayAlbum album={album.current} reload={()=>setLoading(!loading)} showShare={username === undefined} />
+                {currentTrip && username === undefined ? <DayForm album={album.current} auth={auth} setReload={setLoading}/> : null}
                 <DisplayDays days={days.current} album={album}/>
             </>:null}
         </main>

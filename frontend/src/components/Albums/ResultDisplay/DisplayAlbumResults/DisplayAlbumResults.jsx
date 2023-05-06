@@ -1,10 +1,21 @@
+import React, {  useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './DisplayAlbumResults.scss'
 
-const DisplayAlbumResults = ({albums}) => {
+const DisplayAlbumResults = ({ albums, username }) => {
+
+    const [navLink, setNavLink] = useState('');
 
     const navigation = useNavigate()
+
+    useEffect(() => {
+        if(username === undefined){
+            setNavLink(`/album-detail/`)
+        }else{
+            setNavLink('/al/'+username+'/')
+        }
+    }, [username]);
 
     return (
         <div className='album-results'>
@@ -26,7 +37,7 @@ const DisplayAlbumResults = ({albums}) => {
                 <tbody>
                     {albums.map((album, index) => {
                         return(
-                            <tr key={index} onClick={()=>navigation(`/album-detail/${album.id}`)}>
+                            <tr key={index} onClick={()=>navigation(navLink + album.id)}>
                                 <td>{album.title}</td>
                                 <td>{album.region}</td>
                                 <td>{album.country}</td>

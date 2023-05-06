@@ -23,7 +23,9 @@ function App() {
         <Route path="/authentication" element={<AuthenticationPage />} />
         <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
         <Route path="/albums" element={<PrivateRoute><AlbumsPage /></PrivateRoute>} />
+        <Route path="/friend-albums/:username" element={<PrivateRoute><AlbumsPage /></PrivateRoute>} />
         <Route path="/album-detail/:albumId" element={<PrivateRoute><AlbumDetailPage /></PrivateRoute>} />
+        <Route path="/al/:username/:albumId" element={<PrivateRoute><AlbumDetailPage /></PrivateRoute>} />
         <Route path="/*" element={<Navigate to="/home" replace={true}/>} />
       </Routes>
     </div>

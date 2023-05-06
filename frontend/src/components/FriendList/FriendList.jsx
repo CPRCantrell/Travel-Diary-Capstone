@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import useGlobalVariables from '../../hooks/useGlobalVariables'
@@ -6,7 +7,7 @@ import RequestButton from '../elements/RequestButton/RequestButton';
 
 import './FriendList.scss'
 
-const FriendList = () => {
+const FriendList = ({ setModal }) => {
 
     const [reload, setReload] = useState(false)
     const [friends, setFriends] = useState([]);
@@ -86,10 +87,10 @@ const FriendList = () => {
                 <div>
                     {friends.length > 0 ? friends.map((friend,index) => {
                         return(
-                            <div key={index}>
+                            <Link to={`/friend-albums/${friend.friend.username}`} key={index} onClick={()=>setModal()}>
                                 <p>{friend.friend.username}</p>
                                 <p>{`${friend.friend.first_name} ${friend.friend.last_name}`}</p>
-                            </div>
+                            </Link>
                         )
                     }):null}
                 </div>

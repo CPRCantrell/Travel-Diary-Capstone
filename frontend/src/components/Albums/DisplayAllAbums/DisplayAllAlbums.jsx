@@ -2,32 +2,55 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import useAuth from '../../../hooks/useAuth';
+import useGlobalVariables from '../../../hooks/useGlobalVariables';
 
 import './DisplayAllAlbums.scss'
 
-const DisplayAllAlbums = () => {
+const DisplayAllAlbums = ({ username }) => {
 
-    const [user, token] = useAuth()
+    const [baseUrl, auth] = useGlobalVariables()
+    const [navLink, setNavLink] = useState('');
     const navigation = useNavigate()
 
     const [albums, setAlbums] = useState([]);
 
     useEffect(() => {
-        getAlbums()
+        if(username === undefined){
+            setNavLink(`/album-detail/`)
+            getAlbums()
+        }else{
+            setNavLink('/al/'+username+'/')
+            getFriendlyAlbums()
+        }
     }, []);
+
+    useEffect(() => {
+        if(username === undefined){
+            setNavLink(`/album-detail/`)
+            getAlbums()
+        }else{
+            setNavLink('/al/'+username+'/')
+            getFriendlyAlbums()
+        }
+    }, [username]);
 
     async function getAlbums(){
         try{
-            let response = await axios.get('http://127.0.0.1:5000/api/albums', {
-                headers:{
-                    Authorization: 'Bearer ' + token,
-                }
-            })
+            let response = await axios.get(baseUrl+'/albums', auth)
             setAlbums(response.data)
         }
         catch{
             console.log('Error when getting albums')
+        }
+    }
+
+    async function getFriendlyAlbums(){
+        try{
+            let response = await axios.get(baseUrl+'/albs/'+username, auth)
+            setAlbums(response.data)
+        }
+        catch{
+            console.log('Error when getting friendly albums')
         }
     }
 
@@ -51,7 +74,7 @@ const DisplayAllAlbums = () => {
                     <tbody>
                         {albums.map((album, index) => {
                             return(
-                                <tr key={index} onClick={()=>navigation(`/album-detail/${album.id}`)}>
+                                <tr key={index} onClick={()=>navigation(navLink+album.id)}>
                                     <td>{album.title}</td>
                                     <td>{album.region}</td>
                                     <td>{album.country}</td>

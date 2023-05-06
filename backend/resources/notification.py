@@ -34,7 +34,7 @@ class Notifications():
         if(album.all_days_in_same_country):
             location += f' {album.country}'
         note = f'{self.user.first_name} {self.user.last_name} just posted about their {day.day_on_trip if day.day_on_trip != 1  else "First"} day at {location}'
-        self.notify_all_friends({'user_id':0,'notification':note,'navigate':f'/album/{self.user.username}/{album.id}'})
+        self.notify_all_friends({'user_id':0,'notification':note,'navigate':f'/al/{self.user.username}/{album.id}'})
 
 class Note(Resource):
     @jwt_required()

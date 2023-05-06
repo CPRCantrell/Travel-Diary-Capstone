@@ -1,10 +1,21 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './DisplayDayResults.scss'
 
-const DisplayDayResults = ({days}) => {
+const DisplayDayResults = ({days,username}) => {
+
+    const [navLink, setNavLink] = useState('');
 
     const navigation = useNavigate()
+
+    useEffect(() => {
+        if(username === undefined){
+            setNavLink(`/album-detail/`)
+        }else{
+            setNavLink('/al/'+username+'/')
+        }
+    }, [username]);
 
     return (
         <div className='day-results'>
@@ -22,7 +33,7 @@ const DisplayDayResults = ({days}) => {
                 <tbody>
                     {days.map((day, index) => {
                         return(
-                            <tr key={index} onClick={()=>navigation(`/album-detail/${day.album_id}`)}>
+                            <tr key={index} onClick={()=>navigation(navLink + day.album_id)}>
                                 <td>{day.day_on_trip}</td>
                                 <td>{day.country}</td>
                                 <td>{day.state}</td>

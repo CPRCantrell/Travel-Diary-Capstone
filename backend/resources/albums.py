@@ -72,3 +72,43 @@ class IndividualAlbum(Resource):
 
         db.session.commit()
         return album_schema.dump(album), 200
+
+class AlbumsForFriends(Resource):
+    @jwt_required()
+    def get(self, username):
+        user_id = get_jwt_identity()
+        see_user = User.query.filter_by(username = username).first()
+        allowedAlbums = albums_schema.dump(see_user.albums)
+
+        checked_album = 0
+        while( len(allowedAlbums) > checked_album):
+                if allowedAlbums[checked_album]['private']:
+                    allowedAlbums.pop(checked_album)
+                    checked_album -= 1
+                else :
+                    for day in range(len(allowedAlbums[checked_album]['days'])):
+                        checked_photos = 0
+                        while(len(allowedAlbums[checked_album]['days'][day]['photos']) > checked_photos):
+                            if allowedAlbums[checked_album]['days'][day]['photos'][checked_photos]['private']:
+                                allowedAlbums[checked_album]['days'][day]['photos'].pop(checked_photos)
+                                checked_photos -= 1
+                            checked_photos += 1
+                checked_album += 1
+
+        return allowedAlbums, 200
+
+class AlbumForFriend(Resource):
+    @jwt_required()
+    def get(self, username, album_id):
+        user_id = get_jwt_identity()
+        see_album = Album.query.get_or_404(album_id)
+        filtered = album_schema.dump(see_album)
+        for day in range(len(filtered['days'])):
+            checked_photos = 0
+            while(len(filtered['days'][day]['photos']) > checked_photos):
+                if filtered['days'][day]['photos'][checked_photos]['private']:
+                    filtered['days'][day]['photos'].pop(checked_photos)
+                    checked_photos -= 1
+                checked_photos += 1
+
+        return filtered, 200

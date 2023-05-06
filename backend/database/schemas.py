@@ -65,7 +65,7 @@ class PhotoSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     filename = fields.String()
     caption = fields.String()
-    day_id = fields.Integer(required=True)
+    day_id = fields.Integer()
     private = fields.Boolean(required=True)
     tags = ma.Nested(TagSchema, many=True)
 
