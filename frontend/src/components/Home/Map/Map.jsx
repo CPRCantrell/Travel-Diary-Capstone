@@ -19,13 +19,15 @@ const Map = () => {
         try{
             let response = await axios.get(baseURL+'/albums', auth)
             let data = response.data.map(album=>[album.longitude, album.latitude])
-            if (data.length > 0){
+            if (data.length > 0 || data != 'No Albums'){
                 setMarkers(data)
             }else{
                 setLoading(false)
             }
         }
         catch{
+            setMarkerLocations('')
+            setLoading(false)
             console.log('Issue getting album lat and log')
         }
     }

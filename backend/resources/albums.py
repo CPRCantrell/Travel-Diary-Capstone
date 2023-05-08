@@ -18,12 +18,12 @@ class Albums(Resource):
 
     @jwt_required()
     def get(self):
-        try:
-            user_id = get_jwt_identity()
-            user = User.query.get_or_404(user_id)
+        user_id = get_jwt_identity()
+        user = User.query.get_or_404(user_id)
+        if(len(user.albums) > 0):
             return albums_schema.dump(user.albums), 200
-        except:
-            return 'no-albums'
+        else:
+            return 'No Albums'
 
 class IndividualAlbum(Resource):
     @jwt_required()

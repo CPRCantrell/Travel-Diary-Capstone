@@ -37,7 +37,9 @@ const DisplayAllAlbums = ({ username }) => {
     async function getAlbums(){
         try{
             let response = await axios.get(baseUrl+'/albums', auth)
-            setAlbums(response.data)
+            if(response.data !== 'No Albums'){
+                setAlbums(response.data)
+            }
         }
         catch{
             console.log('Error when getting albums')

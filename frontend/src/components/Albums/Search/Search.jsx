@@ -9,6 +9,7 @@ const Search = ({ setResults, auth, username }) => {
 
     const [search, setSearch] = useState('');
     const [friends, setFriends] = useState([]);
+    const [noData, setNoData] = useState(false);
 
     const albums = useRef([]);
     const days = useRef([]);
@@ -37,7 +38,7 @@ const Search = ({ setResults, auth, username }) => {
     }, [username]);
 
     useEffect(() => {
-        if(search===''){setResults(undefined)}
+        if(search==='' && noData){setResults(undefined)}
         else{
             let albumResult = searchAlbums()
             let dayResult = searchDays()
@@ -50,9 +51,14 @@ const Search = ({ setResults, auth, username }) => {
     async function getFriendVision(){
         try{
             let response = await axios.get(baseUrl+'/albs/'+ username, auth)
-            albums.current = response.data
-            if(days.current.length === 0){albums.current.forEach(album => days.current = days.current.concat(album.days))}
-            if(photos.current.length === 0){days.current.forEach(day => photos.current = photos.current.concat(day.photos))}
+            if(response.data !== 'No Albums'){
+                setNoData(false)
+                albums.current = response.data
+                if(days.current.length === 0){albums.current.forEach(album => days.current = days.current.concat(album.days))}
+                if(photos.current.length === 0){days.current.forEach(day => photos.current = photos.current.concat(day.photos))}
+            }else{
+                setNoData(true)
+            }
         }
         catch{
             console.log('issue getting rated friend album info')
@@ -62,7 +68,12 @@ const Search = ({ setResults, auth, username }) => {
     async function getAllAlbumInfo(){
         try{
             let response = await axios.get(baseUrl+'/albums',auth)
-            albums.current = response.data
+            if(response.data !== 'No Albums'){
+                setNoData(false)
+                albums.current = response.data
+            }else{
+                setNoData(true)
+            }
         }
         catch{
             console.log('issue gathering album info')
@@ -72,7 +83,12 @@ const Search = ({ setResults, auth, username }) => {
     async function getAllDayInfo(){
         try{
             let response = await axios.get(baseUrl+'/days',auth)
-            days.current = response.data
+            if(response.data !== 'No Albums'){
+                setNoData(false)
+                days.current = response.data
+            }else{
+                setNoData(true)
+            }
         }
         catch{
             console.log('issue gathering days info')
@@ -82,7 +98,12 @@ const Search = ({ setResults, auth, username }) => {
     async function getAllPhotoInfo(){
         try{
             let response = await axios.get(baseUrl+'/photos',auth)
-            photos.current = response.data
+            if(response.data !== 'No Albums'){
+                setNoData(false)
+                photos.current = response.data
+            }else{
+                setNoData(true)
+            }
         }
         catch{
             console.log('issue gathering photos info')
