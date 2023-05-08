@@ -1,12 +1,71 @@
 .nav-bar{
   background-color: var(--sub-background);
-  display: flex;
-  align-items: center;
-  padding-inline: 4rem;
-  height: 4.5rem;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: 10% 30% 20% 40%;
+  justify-content: space-between;
   position: fixed;
   width: 100%;
   z-index: 10;
-  box-shadow: 0px 6px 6px black;
+  box-shadow: 0px 4px 6px black;
+  color: var(--off-white);
+  height: var(--nav-height);
+
+  .active{
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  h1{
+    text-align: center;
+    line-height: var(--nav-height);
+  }
+
+  button{
+    color: var(--off-white);
+    background-color: transparent;
+    padding-inline: 1.5rem;
+    font-size: 1.2rem;
+    border: none;
+    height: 100%;
+
+    &:hover{
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .logout{
+    span{
+      font-size: 1.5rem;
+      margin-right: .5rem;
+    }
+  }
+
+  .nav-pages,
+  .pop-ups{
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-pages{
+    .link{
+      height: 100%;
+    }
+  }
+
+  .pop-ups{
+    display: flex;
+    justify-content: end;
+
+    .bell{
+      height: auto;
+      border-radius: 50%;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      margin-right: 1rem;
+
+      img{
+        height: 1.4rem;
+      }
+    }
+  }
 }

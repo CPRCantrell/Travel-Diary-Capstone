@@ -52,7 +52,6 @@ class Album(db.Model):
     cover_image = db.Column(db.Integer(), db.ForeignKey('photo.id'))
     users = db.relationship('User', secondary=user_albums, backref='albums')
     days = db.relationship('Day')
-    cover = db.relationship('Photo')
 
 class Day(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

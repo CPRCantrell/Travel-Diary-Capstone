@@ -1,7 +1,7 @@
 from flask import request, send_from_directory, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, Photo, Album, User
+from database.models import db, Photo, Album, User, Day
 from database.schemas import photo_schema, photos_schema
 from werkzeug.utils import secure_filename
 import uuid
@@ -11,14 +11,31 @@ class Photos(Resource):
     def post(self):
         user_id = get_jwt_identity()
         file = request.files['file']
-        file.filename = str(uuid.uuid4()) +'.'+ file.filename.split('.')[-1]
-        destination = '/'.join([current_app.config['UPLOAD_FOLDER'], file.filename])
-        file.save(destination)
-        new_photo = photo_schema.load(request.form)
+        self.upload_photo(file)
+        album_cover = request.form.get('album_cover')
+        photo = {
+            'caption': request.form.get('caption'),
+            'day_id': request.form.get('day_id'),
+            'private': request.form.get('private'),
+        }
+        new_photo = photo_schema.load(photo)
         new_photo.filename = file.filename
         db.session.add(new_photo)
         db.session.commit()
+        if album_cover:
+            self.set_album_cover(new_photo)
         return photo_schema.dump(new_photo), 201
+
+    def upload_photo(self, file):
+        file.filename = str(uuid.uuid4()) +'.'+ file.filename.split('.')[-1]
+        destination = '/'.join([current_app.config['UPLOAD_FOLDER'], file.filename])
+        file.save(destination)
+
+    def set_album_cover(self, photo):
+        photo_day = Day.query.get_or_404(photo.day_id)
+        album = Album.query.get_or_404(photo_day.id)
+        album.cover_image = photo.id
+        db.session.commit()
 
     @jwt_required()
     def get(self):

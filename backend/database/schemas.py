@@ -122,7 +122,7 @@ class AlbumSchema(ma.Schema):
     users = ma.Nested(UserFriendSchema, many=True)
 
     class Meta:
-        fields = ('id', 'title', 'latitude', 'longitude', 'region', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'state', 'year', 'month', 'day', 'private', 'days','cover_image', 'cover', 'current_trip', 'users')
+        fields = ('id', 'title', 'latitude', 'longitude', 'region', 'all_days_in_same_country', 'country', 'all_days_in_same_region_or_state', 'region_or_state', 'all_days_in_same_city', 'all_days_in_same_city', 'city', 'state', 'year', 'month', 'day', 'private', 'days','cover_image', 'current_trip', 'users')
 
     @post_load
     def create_album(self, data, **kwargs):

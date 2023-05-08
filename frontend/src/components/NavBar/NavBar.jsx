@@ -7,6 +7,7 @@ import Modal from "../elements/Modal/Modal";
 import FriendList from "../FriendList/FriendList";
 import Notification from "../Notifications/Notification";
 
+import bellIcon from '../../assests/icons/bell.svg';
 import "./NavBar.scss";
 
 const Navbar = () => {
@@ -23,16 +24,29 @@ const Navbar = () => {
     <>{user ?
       <>
         <div className="nav-bar">
-          <NavLink activeclassname='active' to="/home" className="link">
-            <button onClick={()=>setModal('')}>Home</button>
-          </NavLink>
-          <NavLink activeclassname='active' to="/albums" className="link">
-            <button onClick={()=>setModal('')}>Albums</button>
-          </NavLink>
-          <button onClick={()=>handleLogout()}>Logout</button>
-          <button onClick={()=>setModal('trip')}>+Trip</button>
-          <button onClick={()=>setModal('friend')}>friends</button>
-          <button onClick={()=>setModal('note')}>Notification</button>
+          <div className="logout">
+            <button onClick={()=>handleLogout()}><span>&lArr;</span>Logout</button>
+          </div>
+
+          <div className="nav-pages">
+            <NavLink activeclassname='active' to="/home" className="link">
+              <button onClick={()=>setModal('')}>Home</button>
+            </NavLink>
+            <NavLink activeclassname='active' to="/albums" className="link">
+              <button onClick={()=>setModal('')}>Albums</button>
+            </NavLink>
+            <NavLink activeclassname='active' to="/social" className="link">
+              <button onClick={()=>setModal('friend')}>Social</button>
+            </NavLink>
+          </div>
+
+          <h1 className="logo">Travel Diary</h1>
+
+          <div className="pop-ups">
+            <button onClick={()=>setModal('note')} className="bell"><img src={bellIcon} atl='notifications'/></button>
+            <button onClick={()=>setModal('trip')} className={"add-trip" + modal == ' trip' ? "active":null}>+ Add Albums</button>
+          </div>
+
         </div>
         <Modal show={modal == 'trip'} setShow={()=>setModal('')}>
           <NewTripForm setModal={()=>setModal('')}/>

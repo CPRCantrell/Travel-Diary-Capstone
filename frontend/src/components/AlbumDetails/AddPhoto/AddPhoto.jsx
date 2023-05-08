@@ -15,6 +15,7 @@ const AddPhoto = ({auth, day, setReload }) => {
     const [photoCaption, setPhotoCaption] = useState('');
     const [photoPrivacy, setPhotoPrivacy] = useState(false);
     const [photoModal, setPhotoModal] = useState(false);
+    const [albumCover, setAlbumCover] = useState(false);
     const imageRef = React.createRef();
 
     useEffect(() => {
@@ -33,8 +34,8 @@ const AddPhoto = ({auth, day, setReload }) => {
         data.append('caption', photoCaption)
         data.append('day_id', day.id)
         data.append('private', photoPrivacy)
+        data.append('album_cover', albumCover)
         submitData(data)
-
     }
 
     async function submitData(data){
@@ -59,15 +60,23 @@ const AddPhoto = ({auth, day, setReload }) => {
             <Modal show={photoModal} setShow={()=>setPhotoModal(false)}>
                 <form className='photo-info' onSubmit={(e)=>handleSubmit(e)}>
                     {selectedPhoto ? <img src={URL.createObjectURL(selectedPhoto)} alt='preview of file'/>:null}
-                    <div>
-                        <label>Photo Caption</label>
-                        <textarea name='caption' value={photoCaption} onInput={(e)=>setPhotoCaption(e.target.value)}/>
+                    <div className="photo-fill">
+                        <div className='caption'>
+                            <label>Caption</label>
+                            <textarea name='caption' rows='8' cols='50' value={photoCaption} onInput={(e)=>setPhotoCaption(e.target.value)} placeholder='So You Never Forget'/>
+                        </div>
+                        <div className='photo-options'>
+                            <div className='space-setting'>
+                                <label>Set Private</label>
+                                <SwitchInput checked={photoPrivacy} onChange={()=>setPhotoPrivacy(!photoPrivacy)} name='private' />
+                            </div>
+                            <div className='space-setting'>
+                                <label>Set Album Cover</label>
+                                <SwitchInput checked={albumCover} onChange={()=>setAlbumCover(!albumCover)} name='Album-Cover' />
+                            </div>
+                        </div>
+                        <input type='submit' value='Submit' />
                     </div>
-                    <div>
-                        <label>Set Private</label>
-                        <SwitchInput checked={photoPrivacy} onChange={()=>setPhotoPrivacy(!photoPrivacy)} name='private' />
-                    </div>
-                    <input type='submit' value='Submit' />
                 </form>
             </Modal>
         </div>

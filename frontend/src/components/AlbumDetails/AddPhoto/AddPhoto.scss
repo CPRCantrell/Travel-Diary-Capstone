@@ -1,9 +1,36 @@
 .photo-info{
-    background-color: var(--sub-background);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 
     img{
-        max-height: 50vh;
-        max-height: 50dvh;
-        max-width: 50vw;
+        max-height: 75vh;
+        max-height: 75dvh;
+        max-width: 75vw;
+    }
+
+    .photo-fill{
+        display: grid;
+        padding: 1rem;
+        background-color: var(--sub-background);
+        border-radius: 5px;
+    }
+
+    .caption{
+        label{
+            display: block;
+        }
+    }
+
+    .photo-options{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+
+        .space-setting{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
     }
 }
