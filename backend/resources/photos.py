@@ -33,7 +33,7 @@ class Photos(Resource):
 
     def set_album_cover(self, photo):
         photo_day = Day.query.get_or_404(photo.day_id)
-        album = Album.query.get_or_404(photo_day.id)
+        album = Album.query.get_or_404(photo_day.album_id)
         album.cover_image = photo.id
         db.session.commit()
 

@@ -22,12 +22,15 @@ const DisplayDays = ({ album, days }) => {
                 if(day.day_complete){
                     return(
                         <div key={index} className='day'>
-                            <h2>{`Day ${day.day_on_trip}`}</h2>
-                            {deteterminLocationDisplay(day)}
+                            <div className="label-card">
+                                <h2>{`Day ${day.day_on_trip}`}</h2>
+                                {deteterminLocationDisplay(day)}
+                            </div>
+
                             <div>
                                 <DisplayPhotos photos={day.photos} />
                             </div>
-                            <div>
+                            <div className='entry-area'>
                                 <h3>Your Day Entry</h3>
                                 <p>{day.entry}</p>
                             </div>

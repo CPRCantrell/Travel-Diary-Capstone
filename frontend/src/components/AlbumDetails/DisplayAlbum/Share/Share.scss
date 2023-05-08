@@ -1,3 +1,24 @@
 .share{
+    padding: 1rem 2rem;
     background-color: var(--sub-background);
+}
+
+.shared-user{
+    margin-top: 1rem;
+
+    .user{
+        line-height: .5rem;
+    }
+    .username{
+        font-size: var(--xsm-text);
+    }
+}
+
+.warning-message{
+    margin-top: 1rem;
+    color: red;
+}
+
+.share-sumbit{
+    margin-top: 1rem;
 }

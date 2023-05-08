@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import Modal from '../../elements/Modal/Modal'
 import Share from './Share/Share';
 import defaultImage from '../../../assests/image-default.svg.png'
+import optionIcon from  '../../../assests/icons/three-dots.svg'
+import useGlobalVariables from '../../../hooks/useGlobalVariables';
 
 import './DisplayAlbum.scss'
 
 const DisplayAlbum = ({ album, reload, showShare }) => {
 
     const [share, setShare] = useState(false);
+    const [baseUrl, auth] = useGlobalVariables()
 
     function determineLocationDisplay(){
         if(album.all_days_in_same_city){
@@ -27,23 +30,13 @@ const DisplayAlbum = ({ album, reload, showShare }) => {
 
     return (
         <div className='display-album'>
-            <img src={defaultImage} alt='default' className='cover'/>
+            <img src={album.cover_image ? (baseUrl+'/photo/'+album.cover_image):defaultImage} alt='default' className='cover'/>
             <div>
                 <h1>{album.title}</h1>
-                <p>{`${album.month} ${album.day}, ${album.year}`}</p>
                 {determineLocationDisplay()}
-                {album.users.length > 1?
-                    <div>
-                        <p>Currently Shared With:</p>
-                        {album.users.map((user, index)=>{
-                            return(
-                                <p key={index}>{`${user.username} : ${user.first_name} ${user.last_name}`}</p>
-                            )
-                        })}
-                    </div>
-                :null}
+                <p>{`${album.month} ${album.day}, ${album.year}`}</p>
             </div>
-            {showShare? <button onClick={()=>setShare(!share)}>Share</button>:null}
+            {showShare? <button onClick={()=>setShare(!share)} className='share-btn'><img src={optionIcon} alt='options' /></button>:null}
             <Modal show={share} setShow={()=>setShare(!share)} >
                 <Share album={album} reload={reload} />
             </Modal>

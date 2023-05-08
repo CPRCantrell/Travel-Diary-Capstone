@@ -1,13 +1,43 @@
 .day-form{
+    background-color: var(--main-background-faded);
     color: var(--off-white);
+    padding: 2rem;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 2rem;
 
     .photo-area{
+        margin-top: .5rem;
         display: flex;
     }
 
     .city-form{
         display: flex;
         isolation: isolate;
+    }
+
+    .today-entry{
+
+        textarea{
+            width: 100%;
+        }
+
+        .above-textarea{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: .5rem;
+            isolation: isolate;
+        }
+    }
+
+    .form-options{
+        display: flex;
+        justify-content: space-evenly;
+
+        button{
+            width: 14rem;
+        }
     }
 
     .mapbox-search{

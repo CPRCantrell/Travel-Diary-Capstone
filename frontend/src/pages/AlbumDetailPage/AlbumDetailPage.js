@@ -54,10 +54,15 @@ const AlbumDetailPage = () => {
 
     return (
         <main className='album-details content'>
-            {!loading?<>
-                <DisplayAlbum album={album.current} reload={()=>setLoading(!loading)} showShare={username === undefined} />
-                {currentTrip && username === undefined ? <DayForm album={album.current} auth={auth} setReload={setLoading}/> : null}
-                <DisplayDays days={days.current} album={album}/>
+            {!loading? <>
+                {album.current.cover_image ? <img src={baseUrl+'/photo/'+album.current.cover_image} alt='default' className='background-img'/>:null}
+                <div className='scroll-area'>
+                    <div className='detail-content'>
+                        <DisplayAlbum album={album.current} reload={()=>setLoading(!loading)} showShare={username === undefined} />
+                        {currentTrip && username === undefined ? <DayForm album={album.current} auth={auth} setReload={setLoading}/> : null}
+                        <DisplayDays days={days.current} album={album}/>
+                    </div>
+                </div>
             </>:null}
         </main>
     );

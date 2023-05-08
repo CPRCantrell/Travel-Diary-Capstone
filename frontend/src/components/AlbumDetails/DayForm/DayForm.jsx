@@ -106,19 +106,15 @@ const DayForm = ({ album, auth, setReload }) => {
     return (
         <div className='day-form'>
             {!addDay?
-                <div>
-                    <button onClick={()=>handleTripComplete()}>Trip is Over</button>
-                    <button onClick={()=>createDay()}>+ Day</button>
+                <div className='form-options'>
+                    <button onClick={()=>createDay()} className='submit'>+ Day</button>
+                    <button onClick={()=>handleTripComplete()} className='submit'>Trip is Over</button>
                 </div>
                 :
                 <div>
                     <h2>{'Day '+day.day_on_trip}</h2>
                     {day.city !== null ? deteterminLocationDisplay():null}
                     {day.id?<>
-                        <div className='photo-area'>
-                            <AddPhoto auth={auth} day={day} setReload={setReload}/>
-                            <DisplayPhotos photos={day.photos} auth={auth}/>
-                        </div>
                         {!album.all_days_in_same_city && day.city === null?
                             <form className='city-form' onSubmit={(e)=>handleCitySubmit(e)}>
                                 <div onClick={()=>cityRef.current.focus()} className='input-box mapbox-search'>
@@ -129,15 +125,19 @@ const DayForm = ({ album, auth, setReload }) => {
                                 <input type='submit' value='Submit City' />
                             </form>
                         :
-                            <div>
-                                <div>
+                            <div className='today-entry'>
+                                <div className='above-textarea'>
                                     <label>Today's Entry</label>
-                                    <textarea name='entry' value={entry===null? '':entry} onInput={(e)=>setEntry(e.target.value)} />
+                                    <button onClick={()=>handleComplete()} className='submit'>Complete Day</button>
                                 </div>
+                                <textarea rows='3' name='entry' value={entry===null? '':entry} onInput={(e)=>setEntry(e.target.value)} />
                             </div>
                         }
+                        <div className='photo-area'>
+                            <AddPhoto auth={auth} day={day} setReload={setReload}/>
+                            <DisplayPhotos photos={day.photos} auth={auth}/>
+                        </div>
                     </>:null}
-                    <button onClick={()=>handleComplete()}>Day is Finished with</button>
                 </div>
             }
         </div>

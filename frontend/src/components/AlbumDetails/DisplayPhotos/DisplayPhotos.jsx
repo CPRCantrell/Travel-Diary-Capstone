@@ -25,7 +25,6 @@ const DisplayPhotos = ({ photos }) => {
                         <div style={{maxWidth: textWidth}} className='photo-text'>
                             <p>Caption:</p>
                             <p>{photo.caption}</p>
-                            <p>{`Tags: ${photo.tags.map(tag => tag.user_id ? tag.user_id : tag.friend_without_user_id)}`}</p>
                         </div>
                     </div>
                 )

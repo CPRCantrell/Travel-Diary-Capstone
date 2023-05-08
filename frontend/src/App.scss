@@ -12,6 +12,7 @@
 :root{
   --main-background: #1A1A1B;
   --sub-background: #363332;
+  --main-background-faded: rgba(26, 26, 28, 0.9);
   --highlight: #45f3ff;
 
   --xsm-text: .9rem;
@@ -101,7 +102,7 @@
   }
 }
 
-
+.submit,
 input[type="submit"]{
   position: relative;
   z-index: 10;
@@ -131,4 +132,10 @@ textarea{
   &:focus{
     border: var(--main-border-fx);
   }
+}
+
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

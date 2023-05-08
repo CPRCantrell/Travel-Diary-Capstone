@@ -49,7 +49,16 @@ const Share = ({ album, reload }) => {
 
     return (
         <div className='share' >
-            <p>Private photos in Albums are visiable to all shared users</p>
+            <p>Already Shared Between:</p>
+            {already_share_with_users.map((user, index)=>{
+                return(
+                    <div className='shared-user'>
+                        <p className='user'>{`${user.first_name} ${user.last_name}`}</p>
+                        <p className='username'>{user.username}</p>
+                    </div>
+                )
+            })}
+            <p className='warning-message'>*Private photos in Albums are visiable to all shared users*</p>
             <div className='input-box'>
                 <select type='text' value={choosenFriend} onChange={(e)=>setChoosenFriend(e.target.value)}>
                     <option value=''></option>
@@ -62,7 +71,9 @@ const Share = ({ album, reload }) => {
                 <span>Select Friends to Share With</span>
                 <i/>
             </div>
-            <button onClick={()=>addShare()}>Share</button>
+            <div className="center">
+                <button onClick={()=>addShare()} className={'submit share-sumbit'}>Share</button>
+            </div>
         </div>
     );
 }
