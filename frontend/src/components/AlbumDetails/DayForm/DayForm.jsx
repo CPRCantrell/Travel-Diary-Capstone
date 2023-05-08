@@ -5,6 +5,7 @@ import axios from 'axios';
 import DisplayPhotos from '../DisplayPhotos/DisplayPhotos'
 import useGlobalVariables from '../../../hooks/useGlobalVariables';
 import AddPhoto from '../AddPhoto/AddPhoto';
+import TextArea from '../../elements/TextArea/TextArea';
 
 
 import './DayForm.scss'
@@ -14,7 +15,6 @@ const DayForm = ({ album, auth, setReload }) => {
     const [baseUrl] = useGlobalVariables()
     const [addDay, setAddDay] = useState(false);
     const [day, setDay] = useState();
-    const [entry, setEntry] = useState();
     const [cityResult, setCityResult] = useState();
 
     const cityRef = useRef()
@@ -24,33 +24,16 @@ const DayForm = ({ album, auth, setReload }) => {
             let tempDayHolder = album.days[album.days.length-1]
             if(!tempDayHolder.day_complete){
                 setDay(tempDayHolder)
-                setEntry(tempDayHolder.entry)
                 setAddDay(true)
             }
         }
     },[]);
-
-    useEffect(() => {
-        updateEntry()
-    }, [entry]);
-
-    async function updateEntry(){
-        try{
-            let dayPackage = {entry:(entry === null? '':entry)}
-            let response = await axios.put(baseUrl+'/day/'+day.id,dayPackage,auth)
-            console.log(response.data)
-        }
-        catch{
-            console.log('Issue updating entry')
-        }
-    }
 
     async function createDay(){
         try{
             let dayPackage = {album_id:album.id, day_on_trip:album.days.length + 1}
             let response = await axios.post(baseUrl+'/days',dayPackage,auth)
             setDay(response.data)
-            setEntry(response.data.entry)
             setReload(true)
         }
         catch{
@@ -130,12 +113,12 @@ const DayForm = ({ album, auth, setReload }) => {
                                     <label>Today's Entry</label>
                                     <button onClick={()=>handleComplete()} className='submit'>Complete Day</button>
                                 </div>
-                                <textarea rows='3' name='entry' value={entry===null? '':entry} onInput={(e)=>setEntry(e.target.value)} />
+                                <TextArea rows={'3'} name={'entry'} day={day} />
                             </div>
                         }
                         <div className='photo-area'>
                             <AddPhoto auth={auth} day={day} setReload={setReload}/>
-                            <DisplayPhotos photos={day.photos} auth={auth}/>
+                            <DisplayPhotos photos={day.photos.reverse()} auth={auth}/>
                         </div>
                     </>:null}
                 </div>

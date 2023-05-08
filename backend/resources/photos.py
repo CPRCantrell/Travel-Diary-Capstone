@@ -22,7 +22,7 @@ class Photos(Resource):
         new_photo.filename = file.filename
         db.session.add(new_photo)
         db.session.commit()
-        if album_cover:
+        if album_cover == 'true':
             self.set_album_cover(new_photo)
         return photo_schema.dump(new_photo), 201
 

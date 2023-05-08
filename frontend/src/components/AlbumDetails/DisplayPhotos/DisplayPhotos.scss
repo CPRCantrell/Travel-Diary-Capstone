@@ -1,5 +1,7 @@
 .photos{
     display: flex;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .photo{
@@ -10,5 +12,6 @@
 
     .photo-text{
         display: grid;
+        padding-inline: .5rem;
     }
 }
