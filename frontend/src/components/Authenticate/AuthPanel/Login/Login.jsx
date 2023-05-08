@@ -23,7 +23,7 @@ const Login = ({signUp}) => {
         <form className="login-form" onSubmit={handleSubmit}>
           <>
             {isServerError?
-              <p className="alert error">Username or Password was incorrect</p>
+              <p className={"alert error"}>Username or Password was incorrect</p>
             :null}
           </>
           <h1>Sign in</h1>

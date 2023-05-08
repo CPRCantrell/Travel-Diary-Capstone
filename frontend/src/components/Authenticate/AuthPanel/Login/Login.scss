@@ -15,13 +15,15 @@
 .alert{
     position: absolute;
     font-size: var(--xsm-text);
-    top: 3rem;
+    top: 1.5rem;
     left: 0;
     right: 0;
     text-align: center;
+    color: red;
 }
 
 .login-form{
+    position: relative;
     background-color: var(--sub-background);
     border-radius: 8px;
     width: 500px;
