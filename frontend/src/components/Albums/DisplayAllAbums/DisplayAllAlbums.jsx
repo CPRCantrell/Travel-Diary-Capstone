@@ -22,6 +22,7 @@ const DisplayAllAlbums = ({ username }) => {
             setNavLink('/al/'+username+'/')
             getFriendlyAlbums()
         }
+        return () => {setAlbums([])}
     }, []);
 
     useEffect(() => {

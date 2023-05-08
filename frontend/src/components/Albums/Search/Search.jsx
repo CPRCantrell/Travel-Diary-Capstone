@@ -38,7 +38,8 @@ const Search = ({ setResults, auth, username }) => {
     }, [username]);
 
     useEffect(() => {
-        if(search==='' && noData){setResults(undefined)}
+        debugger
+        if(search==='' || noData){setResults(undefined)}
         else{
             let albumResult = searchAlbums()
             let dayResult = searchDays()
