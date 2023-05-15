@@ -33,3 +33,28 @@ Data:
 User (Eric Cantrell) - approved share request sent by: Tester (Tester McTesty)
 
 
+Transaction: REQUEST	Date: 2023-MAY-8	Time: 10:57:23
+Data:
+Tester (Test McTest) - SENT: friend request to: Blazebellet (Chris Figueroa Perez)
+
+
+Transaction: REQUEST	Date: 2023-MAY-8	Time: 11:24:9
+Data:
+DayBreaker189 (Eric Cantrell) - SENT: friend request to: Tester (Test McTest)
+
+
+Transaction: REQUEST	Date: 2023-MAY-8	Time: 11:24:59
+Data:
+Tester (Test McTest) - approved friend request sent by: DayBreaker189 (Eric Cantrell)
+
+
+Transaction: REQUEST	Date: 2023-MAY-8	Time: 11:27:32
+Data:
+DayBreaker189 (Eric Cantrell) - SENT: share request to: Tester (Test McTest)
+
+
+Transaction: REQUEST	Date: 2023-MAY-8	Time: 11:28:2
+Data:
+Tester (Test McTest) - approved share request sent by: DayBreaker189 (Eric Cantrell)
+
+

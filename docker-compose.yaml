@@ -1,0 +1,37 @@
+version: '3.1'
+services:
+  travel-diary-database:
+    build: ./database
+    ports:
+      - 3307:3006
+    image: blazebellet/travel-diary-database:1
+    container_name: travel-diary-database
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+
+  travel-diary-backend:
+    build: ./backend
+    ports:
+      - 5000:5000
+    restart: always
+    image: blazebellet/travel-diary-backend:1
+    container_name: travel-diary-backend
+    depends_on:
+      - "travel-diary-database"
+    command: >
+      sh -c "flask db upgrade && flask run --host=0.0.0.0"
+
+  travel-diary-frontend:
+    build: ./frontend
+    ports:
+      - 3001:80
+    image: blazebellet/travel-diary-frontend:1
+    container_name: travel-diary-frontend
+    depends_on:
+      - "travel-diary-backend"
+
+volumes:
+  db-data:

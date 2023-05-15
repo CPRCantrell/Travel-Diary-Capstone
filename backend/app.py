@@ -37,7 +37,8 @@ def create_app():
     # Loads config properties from .env file
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET_KEY')
-    app.config['UPLOAD_FOLDER'] = '/Users/Chris/Desktop/DevCodeCamp/Projects/CapStone -Travel Diary/Travel Diary/backend/static/uploads'
+    path = os.path.dirname(os.path.abspath(__file__)).replace('\\','/')
+    app.config['UPLOAD_FOLDER'] = path[path.index('/'):] + '/static/uploads'
 
     # Registers all routes with API
     api = create_routes()

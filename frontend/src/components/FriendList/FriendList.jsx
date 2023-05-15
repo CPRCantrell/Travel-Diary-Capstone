@@ -57,7 +57,7 @@ const FriendList = ({ setModal }) => {
             case 'waiting_friend':
                 return <RequestButton sendTo={id} type={'accept/decline'} text={'Respond to Request'} reload={()=>setReload(!reload)}/>
             default:
-                return <RequestButton dataId={id} reload={()=>setReload(!reload)}/>
+                return <RequestButton sendTo={id} reload={()=>setReload(!reload)}/>
         }
     }
 
