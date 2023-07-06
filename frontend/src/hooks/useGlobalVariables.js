@@ -4,7 +4,7 @@ const useGlobalVariables = () => {
 
     const [user, token] = useAuth()
 
-    const BASE_URL = 'http://127.0.0.1:5000/api'
+    const BASE_URL = 'http://13.58.108.46:8000/api'
     const AUTHENTICATION = {headers:{Authorization: 'Bearer ' + token}}
 
     return ([BASE_URL, AUTHENTICATION]);
