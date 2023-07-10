@@ -23,7 +23,7 @@ load_dotenv()
 
 # Creates instances of additional libraries
 bcrypt = Bcrypt()
-jwt= JWTManager()
+jwt = JWTManager()
 cors = CORS()
 migrate = Migrate()
 
@@ -77,3 +77,5 @@ def create_routes():
 
 
     return api
+
+create_app()
