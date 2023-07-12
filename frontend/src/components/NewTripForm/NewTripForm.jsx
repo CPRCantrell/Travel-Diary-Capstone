@@ -6,12 +6,14 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import Collapsible from '../elements/Collapsible/Collapsible'
 import SwitchInput from '../elements/SwitchInput/SwitchInput';
+import useGlobalVariables from '../../hooks/useGlobalVariables';
 
 import './NewTripForm.scss'
 
 const NewTripForm = ({setModal}) => {
 
     const [user, token] = useAuth()
+    const [BASE_URL, auth] = useGlobalVariables()
     const navigate = useNavigate()
 
     const [title, setTitle] = useState('');
@@ -109,10 +111,7 @@ const NewTripForm = ({setModal}) => {
 
     async function sendAlbumData(albumInfo){
         try{
-            let response = await axios.post('http://127.0.0.1:5000/api/albums',albumInfo,{
-            headers:{
-                Authorization: 'Bearer ' + token,
-            }})
+            let response = await axios.post(BASE_URL+'/albums',albumInfo,auth)
             navigate(`/album-detail/${response.data.id}`)
             setModal(false)
         }
