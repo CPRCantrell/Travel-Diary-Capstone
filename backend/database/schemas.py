@@ -149,6 +149,7 @@ class RequestSchema(ma.Schema):
 
 request_schema = RequestSchema()
 requests_schema = RequestSchema(many=True)
+
 class FriendSchema(ma.Schema):
     user_id = fields.Integer()
     friend_id = fields.Integer(required=True)
